@@ -1,0 +1,20 @@
+.popup__close {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 8px;
+  padding-left: 475px;
+}
+
+.popup__close:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 959px) {
+  .popup__close {
+    padding-left: 260px;
+    width: 20px;
+    height: 20px;
+    margin: 5px auto 16px;
+  }
+}

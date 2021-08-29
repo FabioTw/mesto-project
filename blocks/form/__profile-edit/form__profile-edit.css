@@ -1,0 +1,17 @@
+.form__profile-edit {
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-radius: 3%;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 0;
+}
+
+@media screen and (max-width: 959px) {
+  .form__profile-edit {
+    width: 282px;
+    margin: 0 auto 16px;
+  }
+}

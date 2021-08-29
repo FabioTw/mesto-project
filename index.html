@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Страница о том как научиться учиться">
+  <meta name="keywords" content="yandex praktikum, CSS, HTML">
+  <meta name="author" content="Eugene C.">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Место</title>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <img src="./images/logo.svg" alt="Логотип сайта" class="header__logo">
+    </header>
+    <section class="profile">
+      <div class="profile__author">
+        <img class="profile__avatar" alt="фото профиля" src="./images/avatar.png">
+        <div class="profile__container">
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <input type="button" class="profile__edit-button" value="">
+          </div>
+          <p class="profile__description">Исследователь океана</p>
+        </div>
+      </div>
+      <input type="button" class="profile__add-button" value="">
+    </section>
+    <section class="elements">
+      <dev class="element">
+        <img src="./images/karachevsk.png" img="фото Карачевска" class="element__photo">
+        <div class="element__description">
+          <h2 class="element__text">Карачаевск</h2>
+          <input type="button" class="element__button" value="">
+        </div>
+      </dev>
+      <dev class="element">
+        <img src="./images/elbrus.png" img="фото Карачевска" class="element__photo">
+        <div class="element__description">
+          <h2 class="element__text">Гора Эльбрус</h2>
+          <input type="button" class="element__button" value="">
+        </div>
+      </dev>
+      <dev class="element">
+        <img src="./images/dombai.png" img="фото Карачевска" class="element__photo">
+        <div class="element__description">
+          <h2 class="element__text">Домбай</h2>
+          <input type="button" class="element__button" value="">
+        </div>
+      </dev>
+      <dev class="element">
+        <img src="./images/elbrus.png" img="фото Карачевска" class="element__photo">
+        <div class="element__description">
+          <h2 class="element__text">Гора Эльбрус</h2>
+          <input type="button" class="element__button" value="">
+        </div>
+      </dev>    
+      <dev class="element">
+        <img src="./images/dombai.png" img="фото Карачевска" class="element__photo">
+        <div class="element__description">
+          <h2 class="element__text">Домбай</h2>
+          <input type="button" class="element__button element__button_activated" value="">
+        </div>
+      </dev>
+      <dev class="element">
+        <img src="./images/karachevsk.png" img="фото Карачевска" class="element__photo">
+        <div class="element__description">
+          <h2 class="element__text">Карачаево-Ч...</h2>
+          <input type="button" class="element__button" value="">
+        </div>
+      </dev>
+    </section>
+    <footer class="footer">
+      <p class="footer__copyright">© 2020 Mesto Russia</p>
+    </footer>
+    <div class="popup">
+      <img class="popup__close" src="./images/close_icon.png" alt="крестик">
+      <form class="popup__container">
+          <fieldset class="form__profile-edit">
+              <h2 class="form__heading">Редактировать профиль</h2>
+              <input class="form__name" type="text" name="profile-setting" id="name" placeholder="Имя">
+              <input class="form__description" type="text" name="profile-setting" id="about" placeholder="О себе">
+              <input class="form__button" type="submit" value="Сохранить">
+          </fieldset>
+      </form> 
+    </div>
+  </div>
+</body>
+</html>

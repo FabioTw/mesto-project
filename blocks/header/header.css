@@ -1,0 +1,17 @@
+.header {
+  width: 68.75%;
+  height: 74px;
+  margin: 44.8px auto 40px;
+  padding-left: 9px;
+  border-bottom: 1px solid #545454cc ;
+  transition: .5s;
+}
+
+@media screen and (max-width: 959px) {
+  .header {
+    width: 99%;
+    height: 56px;
+    margin: 28px auto 42px;
+    padding-left: 4px;
+  }
+}
