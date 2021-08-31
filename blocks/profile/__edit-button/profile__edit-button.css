@@ -1,6 +1,6 @@
 .profile__edit-button {
   background-color: #000;
-  border: 2px solid #FFF;
+  border: 1px solid #FFF;
   box-sizing: border-box;
   border-radius: 2px;
   height: 24px;
@@ -20,5 +20,6 @@
   .profile__edit-button {
     height: 18px;
     width: 18px;
+    background-size: auto;
   }
 }
