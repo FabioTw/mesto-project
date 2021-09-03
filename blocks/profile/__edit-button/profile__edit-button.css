@@ -2,12 +2,12 @@
   background-color: #000;
   border: 1px solid #FFF;
   box-sizing: border-box;
-  border-radius: 2px;
   height: 24px;
   width: 24px;
   background-image: url(../../../images/edit.svg);
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 10px;
   align-self: center;
 }
 
@@ -20,6 +20,6 @@
   .profile__edit-button {
     height: 18px;
     width: 18px;
-    background-size: auto;
+    background-size: 7.5px;
   }
 }
