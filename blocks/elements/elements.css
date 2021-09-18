@@ -5,6 +5,7 @@
   row-gap: 20px;
   column-gap: 17px;
   padding-left: 9px;
+  transition: .5s linear all;
 }
 
 @media screen and (max-width: 1279px) {
