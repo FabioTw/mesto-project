@@ -28,7 +28,7 @@ const addButton = profile.querySelector('.profile__add-button');
 const editButton = profileInfo.querySelector('.profile__edit-button');
 const closePopupButton = popupProfile.querySelector('.popup__close');
 const closePopupAddElementButton = popupAddElement.querySelector('.popup__close');
-const closePopupPhoto = popupPhoto.querySelector('.popup__close');
+const closePopupPhotoButton = popupPhoto.querySelector('.popup__close');
 const submitButton = popupProfileEdit.querySelector('.popup__button');
 const submitAddElementButton = popupAddElementProfileEdit.querySelector('.popup__button');
 
@@ -60,7 +60,7 @@ const initialCards = [
 ]; 
 
 initialCards.forEach(value => {
-  elements.append(standartElements(value.name, value.link));
+  elements.append(createStandartElements(value.name, value.link));
 });
 
 editButton.addEventListener('click', editProfilePopup);
@@ -69,12 +69,14 @@ submitAddElementButton.addEventListener('click', addElement);
 addButton.addEventListener('click', addElementPopup);
 closePopupButton.addEventListener('click', editProfilePopup);
 closePopupAddElementButton.addEventListener('click', addElementPopup);
-closePopupPhoto.addEventListener('click', popupPhotoClose);
+closePopupPhotoButton.addEventListener('click', closePopupPhoto);
 popupProfileInputName.value = profileName.textContent;
 popupProfileInputDescription.value = profileDescription.textContent;
 
 function editProfilePopup() {
   switchPopup(popupProfile);
+  popupProfileInputName.value = profileName.textContent;
+  popupProfileInputDescription.value = profileDescription.textContent;
 }
 
 function addElementPopup() {
@@ -90,12 +92,12 @@ function editProfileSubmitButton (event) {
 
 function addElement (event) {
   event.preventDefault();
-  elements.insertBefore(standartElements(popupAddElementInputName.value, popupAddElementInputDescription.value), element);
+  elements.insertBefore(createStandartElements(popupAddElementInputName.value, popupAddElementInputDescription.value), element);
   switchPopup(popupAddElement);
   resetPopupFields (popupAddElementInputName, popupAddElementInputDescription);
 }
 
-function standartElements(name, link) {
+function createStandartElements(name, link) {
   const elementTemplate = document.querySelector('#element-template').content;
   const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
   const deleteButton = elementCard.querySelector('.element__delete');
@@ -120,7 +122,7 @@ function standartElements(name, link) {
   return elementCard;
 }
 
-function popupPhotoClose() {
+function closePopupPhoto() {
   switchPopup(popupPhoto);
 }
 
