@@ -16,7 +16,10 @@
     </header>
     <section class="profile">
       <div class="profile__author">
-        <img class="profile__avatar" alt="фото профиля" src="./images/avatar.png">
+        <div class="profile__avatar-container">
+          <img class="profile__avatar" alt="фото профиля" src="./images/avatar.png">
+          <img class="profile__avatar-edit" alt="изменить аватар" src="./images/edit.svg">
+        </div>
         <div class="profile__container">
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -41,14 +44,20 @@
     </footer>
     <div class="popup popup_addElement">
       <input type="button" class="popup__close" value=" ">
-      <form class="popup__container" name="profile-settings">
+      <form class="popup__container" name="profile-settings" novalidate>
           <div class="popup__profile-edit">
             <h2 class="popup__heading">Новое Место</h2>
             <fieldset class="popup__input">
-              <input class="popup__input-field popup__input-field_type_name" type="text" name="profile-name" id="place" placeholder="Название">
-              <input class="popup__input-field popup__input-field_type_description" type="text" name="profile-description" id="link" placeholder="Ссылка на картинку">
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_name" type="text" name="profile-name" id="place-input" placeholder="Название" minlength="2" maxlength="30" required>
+                <span class="popup__error place-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_description" type="url" name="profile-description" id="link-input" placeholder="Ссылка на картинку" required>
+                <span class="popup__error link-input-error"></span>
+              </label>
             </fieldset>
-            <input class="popup__button" type="submit" value="Сохранить">
+            <input class="popup__button popup__button_disabled" type="submit" value="Сохранить">
           </div>
       </form> 
     </div>
@@ -59,16 +68,37 @@
         <p class="popup__picture-text">Подпись к картинке</p>
       </div>
     </div>
-    <div class="popup popup_editElement">
+    <div class="popup popup_editElement" novalidate> 
       <input type="button" class="popup__close" value=" ">
       <form class="popup__container" name="profile-settings">
           <div class="popup__profile-edit">
             <h2 class="popup__heading">Редактировать профиль</h2>
             <fieldset class="popup__input">
-              <input class="popup__input-field popup__input-field_type_name" type="text" name="profile-name" id="name" placeholder="Имя">
-              <input class="popup__input-field popup__input-field_type_description" type="text" name="profile-description" id="about" placeholder="О себе">
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_name" type="text" name="profile-name" id="name-input" placeholder="Имя" minlength="2" maxlength="40" required>
+                <span class="popup__error name-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_description" type="text" name="profile-description" id="about-input" placeholder="О себе" minlength="2" maxlength="200" required>
+                <span class="popup__error about-input-error"></span>
+              </label>
             </fieldset>
             <input class="popup__button" type="submit" value="Сохранить">
+          </div>
+      </form> 
+    </div>
+    <div class="popup popup_editAvatar" novalidate>
+      <input type="button" class="popup__close" value=" ">
+      <form class="popup__container" name="profile-settings">
+          <div class="popup__profile-edit popup__profile-edit_one-input">
+            <h2 class="popup__heading">Обновить аватар</h2>
+            <fieldset class="popup__input">
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_avatar" type="url" name="profile-description" id="avatar-input" placeholder="Ссылка на картинку">
+                <span class="popup__error avatar-input-error"></span>
+              </label>
+            </fieldset>
+            <input class="popup__button popup__button_disabled" type="submit" value="Сохранить">
           </div>
       </form> 
     </div>

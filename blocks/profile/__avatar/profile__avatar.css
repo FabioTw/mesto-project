@@ -4,6 +4,10 @@
   height: 120px;
 }
 
+/* .profile__avatar:hover {
+  opacity: .6;
+} */
+
 @media screen and (max-width: 959px) {
   .profile__avatar {
     align-self: center;
