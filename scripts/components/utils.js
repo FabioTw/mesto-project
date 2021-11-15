@@ -13,14 +13,16 @@ popupProfile.addEventListener('click', closePopupProfile);
 avatar.addEventListener('click', openAvatarPopup);
 popupEditAvatar.addEventListener('click', openAvatarPopup);
 
-popup.forEach(element => {
-  element.addEventListener('keydown', closeEscButton);
-});
+document.addEventListener('keyup', closeEscButton);
 
 function closeEscButton (event) {
-  if (event.code == 'Escape') {
-    switchPopup(this);
-  }
+  popup.forEach(element => {
+    if (element.classList.contains('popup_opened')) {
+      if (event.key == 'Escape') {
+        switchPopup(element);
+      }
+    }
+  });
 };
 
 function switchPopup(popup) {
