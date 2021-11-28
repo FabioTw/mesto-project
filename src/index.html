@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=divice-width, initial-scale=1.0">
+  <meta name="description" content="Страница о том как научиться учиться">
+  <meta name="keywords" content="yandex praktikum, CSS, HTML">
+  <meta name="author" content="Eugene C.">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+  <title>Место</title>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <img src="<%=require('./images/logo.svg')%>" alt="Логотип сайта" class="header__logo">
+    </header>
+    <section class="profile">
+      <div class="profile__author">
+        <div class="profile__avatar-container">
+          <img class="profile__avatar" alt="фото профиля" src="<%=require('./images/avatar.png')%>">
+          <img class="profile__avatar-edit" alt="изменить аватар" src="<%=require('./images/edit.svg')%>">
+        </div>
+        <div class="profile__container">
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <input type="button" class="profile__edit-button" value=" ">
+          </div>
+          <p class="profile__description">Исследователь океана</p>
+        </div>
+      </div>
+      <input type="button" class="profile__add-button" value=" ">
+    </section>
+    <section class="elements">
+      <div class="element hidden">
+        <img src="<%=require('./images/karachevsk.png')%>" alt="фото Карачевска" class="element__photo">
+        <div class="element__description">
+          <h2 class="element__text">Карачаевск</h2>
+          <div class="element__like-block">
+            <input type="button" class="element__button" value=" ">
+            <p class="element__likes">0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <p class="footer__copyright">© 2020 Mesto Russia</p>
+    </footer>
+    <div class="popup popup_addElement">
+      <input type="button" class="popup__close" value=" ">
+      <form class="popup__container" name="profile-settings" novalidate>
+          <div class="popup__profile-edit">
+            <h2 class="popup__heading">Новое Место</h2>
+            <fieldset class="popup__input">
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_name" type="text" name="profile-name" id="place-input" placeholder="Название" minlength="2" maxlength="30" required>
+                <span class="popup__error place-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_description" type="url" name="profile-description" id="link-input" placeholder="Ссылка на картинку" required>
+                <span class="popup__error link-input-error"></span>
+              </label>
+            </fieldset>
+            <input class="popup__button popup__button_disabled" type="submit" value="Сохранить">
+          </div>
+      </form> 
+    </div>
+    <div class="popup popup_picture">
+      <div class="popup__picture">
+        <input type="button" class="popup__close popup__close_picture" value=" ">
+        <img class="popup__picture-img" src="#" alt="выбранное фото" >
+        <p class="popup__picture-text">Подпись к картинке</p>
+      </div>
+    </div>
+    <div class="popup popup_editElement" novalidate> 
+      <input type="button" class="popup__close" value=" ">
+      <form class="popup__container" name="profile-settings">
+          <div class="popup__profile-edit">
+            <h2 class="popup__heading">Редактировать профиль</h2>
+            <fieldset class="popup__input">
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_name" type="text" name="profile-name" id="name-input" placeholder="Имя" minlength="2" maxlength="40" required>
+                <span class="popup__error name-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_description" type="text" name="profile-description" id="about-input" placeholder="О себе" minlength="2" maxlength="200" required>
+                <span class="popup__error about-input-error"></span>
+              </label>
+            </fieldset>
+            <input class="popup__button" type="submit" value="Сохранить">
+          </div>
+      </form> 
+    </div>
+    <div class="popup popup_editAvatar" novalidate>
+      <input type="button" class="popup__close" value=" ">
+      <form class="popup__container" name="profile-settings">
+          <div class="popup__profile-edit popup__profile-edit_one-input">
+            <h2 class="popup__heading">Обновить аватар</h2>
+            <fieldset class="popup__input">
+              <label class="popup__field">
+                <input class="popup__input-field popup__input-field_type_avatar" type="url" name="profile-description" id="avatar-input" placeholder="Ссылка на картинку">
+                <span class="popup__error avatar-input-error"></span>
+              </label>
+            </fieldset>
+            <input class="popup__button popup__button_disabled" type="submit" value="Сохранить">
+          </div>
+      </form> 
+    </div>
+  </div>
+  <template id="element-template">
+    <div class="element">
+      <img src="<%=require('./images/karachevsk.png')%>" alt="фото Карачевска" class="element__photo">
+      <img src="<%=require('./images/delete.svg')%>" class="element__delete" alt="кнопка Удаления">
+      <div class="element__description">
+        <h2 class="element__text">Карачаево-Ч...</h2>
+        <div class="element__like-block">
+          <input type="button" class="element__button" value=" ">
+          <p class="element__likes">0</p>
+        </div>
+      </div>
+    </div>
+  </template>
+  <!-- <script type="module" src="./scripts/script.js"></script> -->
+</body>
+</html>
