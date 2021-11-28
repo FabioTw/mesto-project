@@ -1,8 +1,11 @@
+import './../pages/index.css';
 import * as card from './components/card.js'
 import * as utils from './components/utils.js'
 import * as modal from './components/modal.js'
 import * as validate from './components/validate.js'
 import * as variables from './components/variables.js'
+import * as api from './components/api.js'
+
 
 export const data = {
   formSelector: '.popup__container',

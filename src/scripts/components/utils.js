@@ -29,4 +29,14 @@ function switchPopup(popup) {
   popup.classList.toggle('popup_opened');
 }
 
-export {switchPopup};
+function renderLoading(isLoading, button) {
+  if (isLoading) {
+    button.value = 'Сохранение...';
+    button.textContent = 'Сохранение...';
+  } else {
+    button.value = 'Сохранить';
+    button.textContent = 'Сохранить';
+  }
+}
+
+export {switchPopup, renderLoading};

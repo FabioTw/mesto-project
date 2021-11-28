@@ -5,6 +5,7 @@ export function enableValidation (data) {
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
+      renderLoading(true, formElement.querySelector(data.submitButtonSelector));
     })
     setEventListeners(formElement)
   })
