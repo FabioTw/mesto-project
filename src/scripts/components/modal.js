@@ -31,7 +31,9 @@ function addElementPopup(evt) {
     switchPopup(popupAddElement);
   };
   if (submitAddElementButton.value === 'Сохранить') { //проверяет сохраняется карточка или нет для того чтобы не делать кнопку серой во время сохранения
-    innactiveButton(evt.target.closest(data.submitButtonSelector));
+    if (evt.target.closest(data.submitButtonSelector) !== null) {
+      innactiveButton(evt.target.closest(data.submitButtonSelector));
+    }
   }
 }
 //редактирование профиля
@@ -68,7 +70,9 @@ function openAvatarPopup (evt) {
     switchPopup(popupEditAvatar);
   };
   if (submitAvatarButton.value === 'Сохранить') {
-    innactiveButton(evt.target.closest(data.submitButtonSelector));
+    if (evt.target.closest(data.submitButtonSelector) !== null) {
+      innactiveButton(evt.target.closest(data.submitButtonSelector));
+    }
   }
 }
 
