@@ -26,7 +26,9 @@ function addElementPopup(evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
     switchPopup(popupAddElement);
   };
-  innactiveButton(evt.target.closest(data.submitButtonSelector));
+  if (evt.target.closest(data.submitButtonSelector) !== null) {
+      innactiveButton(evt.target.closest(data.submitButtonSelector));
+  }
 }
 
 function editProfileSubmitButton (event) {
@@ -59,7 +61,9 @@ function openAvatarPopup (evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
     switchPopup(popupEditAvatar);
   };
-  innactiveButton(evt.target.closest(data.submitButtonSelector));
+  if (evt.target.closest(data.submitButtonSelector) !== null) {
+      innactiveButton(evt.target.closest(data.submitButtonSelector));
+  }
 }
 
 function submitAvatar (evt) {
