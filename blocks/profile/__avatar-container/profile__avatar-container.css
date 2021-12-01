@@ -1,7 +1,9 @@
 .profile__avatar-container:hover .profile__avatar-edit {
   opacity: 1;
+  cursor: pointer;
 }
 
 .profile__avatar-container:hover .profile__avatar {
-  opacity: .6;;
+  opacity: .6;
+  cursor: pointer;
 }
