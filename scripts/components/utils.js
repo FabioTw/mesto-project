@@ -15,7 +15,6 @@ popupEditAvatar.addEventListener('click', closeAvatarPopup);
 
 function closeEscButton (event) {
   if (event.key === 'Escape') {
-    console.log('hi')
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
     document.removeEventListener('keydown', closeEscButton);
