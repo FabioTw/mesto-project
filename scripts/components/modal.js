@@ -1,4 +1,4 @@
-import {switchPopup} from './utils.js';
+import {openPopup, closePopup} from './utils.js';
 import {data} from '../script.js';
 import {profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, popupAddElementInputName, 
   popupAddElementInputDescription , element, popupProfile, popupPhoto, popupEditAvatar, avatarImage, popupEditAvatarInputUrl} from './variables.js';
@@ -8,41 +8,53 @@ popupProfileInputName.value = profileName.textContent;
 popupProfileInputDescription.value = profileDescription.textContent;
 
 function editProfilePopup() {
-  switchPopup(popupProfile);
+  openPopup(popupProfile);
   popupProfileInputName.value = profileName.textContent;
   popupProfileInputDescription.value = profileDescription.textContent;
 }
 
 function addElement (event) {
   event.preventDefault();
-  if (!(event.target.closest('.popup__button_disabled'))) {
+  if (event.target.querySelector('.popup__button_disabled') === null) {
     elements.insertBefore(createStandartElements(popupAddElementInputName.value, popupAddElementInputDescription.value), element);
-    switchPopup(popupAddElement);
+    closePopup(popupAddElement);
     resetPopupFields (popupAddElementInputName, popupAddElementInputDescription);
+    if (event.target.querySelector(data.submitButtonSelector) !== null) {
+      innactiveButton(event.target.querySelector(data.submitButtonSelector));
+    }
   };
 }
 
-function addElementPopup(evt) {
+function openAddElementPopup(evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
-    switchPopup(popupAddElement);
+    openPopup(popupAddElement);
   };
-  if (evt.target.closest(data.submitButtonSelector) !== null) {
-      innactiveButton(evt.target.closest(data.submitButtonSelector));
+  if (evt.target.querySelector(data.submitButtonSelector) !== null) {
+    innactiveButton(evt.target.querySelector(data.submitButtonSelector));
+  }
+}
+
+function closeAddElementPopup(evt) {
+  if (!(evt.target.closest('.popup__profile-edit'))) {
+    closePopup(popupAddElement);
+  };
+  if (evt.target.querySelector(data.submitButtonSelector) !== null) {
+    innactiveButton(evt.target.querySelector(data.submitButtonSelector));
   }
 }
 
 function editProfileSubmitButton (event) {
   event.preventDefault(); 
-  if (!(event.target.closest('.popup__button_disabled'))) {
+  if (event.target.querySelector('.popup__button_disabled') === null) {
     profileName.textContent = popupProfileInputName.value;
     profileDescription.textContent = popupProfileInputDescription.value;
-    switchPopup(popupProfile);
+    closePopup(popupProfile);
   };
 }
 
 function closePopupPhoto(evt) {
   if (!(evt.target.closest('.popup__picture-img'))) {
-  switchPopup(popupPhoto);
+    closePopup(popupPhoto);
   };
 }
 
@@ -53,30 +65,40 @@ function resetPopupFields (field1, field2) {
 
 function closePopupProfile (evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
-    switchPopup(popupProfile);
+    closePopup(popupProfile);
   };
 }
 
 function openAvatarPopup (evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
-    switchPopup(popupEditAvatar);
+    openPopup(popupEditAvatar);
   };
-  if (evt.target.closest(data.submitButtonSelector) !== null) {
-      innactiveButton(evt.target.closest(data.submitButtonSelector));
+  if (evt.target.querySelector(data.submitButtonSelector) !== null) {
+    innactiveButton(evt.target.querySelector(data.submitButtonSelector));
   }
+}
+
+function closeAvatarPopup (evt) {
+  if (!(evt.target.closest('.popup__profile-edit'))) {
+    closePopup(popupEditAvatar);
+  };
 }
 
 function submitAvatar (evt) {
   evt.preventDefault(); 
-  if (!(evt.target.closest('.popup__button_disabled'))) {
+  if (evt.target.querySelector('.popup__button_disabled') === null) {
     avatarImage.src = popupEditAvatarInputUrl.value;
-    switchPopup(popupEditAvatar);
+    closePopup(popupEditAvatar);
     resetPopupFields(popupEditAvatarInputUrl, popupEditAvatarInputUrl);
+    if (evt.target.querySelector(data.submitButtonSelector) !== null) {
+      innactiveButton(evt.target.querySelector(data.submitButtonSelector));
+    }
   };
 }
 
 function innactiveButton (button) {
   button.classList.add(data.inactiveButtonClass);
+  button.setAttribute("disabled", "disabled");
 }
 
-export {editProfilePopup, addElement, addElementPopup, editProfileSubmitButton, closePopupPhoto, closePopupProfile, openAvatarPopup, submitAvatar};
+export {editProfilePopup, addElement, openAddElementPopup, closeAddElementPopup, editProfileSubmitButton, closePopupPhoto, closePopupProfile, openAvatarPopup, closeAvatarPopup, submitAvatar};

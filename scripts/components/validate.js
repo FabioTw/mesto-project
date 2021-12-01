@@ -46,8 +46,10 @@ function toggleButtonState (inputList, formElement) {
   const buttonElement = formElement.querySelector(data.submitButtonSelector);
   if (hasInvalidInput(inputList)) {
       buttonElement.classList.add(data.inactiveButtonClass);
+      buttonElement.setAttribute("disabled", "disabled");
   } else {
       buttonElement.classList.remove(data.inactiveButtonClass);  
+      buttonElement.removeAttribute("disabled", "disabled");
   }
 }
 

@@ -1,5 +1,5 @@
 import {popupPhotoImg, popupPhotoText, elements, popupPhoto} from './variables.js'
-import {switchPopup} from './utils.js'
+import {openPopup} from './utils.js'
 const initialCards = [
   {
     name: 'Карачаевск',
@@ -40,7 +40,7 @@ export function createStandartElements(name, link) {
   elementCard.querySelector('.element__photo').src = link; 
   elementCard.querySelector('.element__photo').alt = name + ' фото'; 
   elementCard.querySelector('.element__photo').addEventListener('click', function(evt) {
-    switchPopup(popupPhoto);
+    openPopup(popupPhoto);
     popupPhotoImg.src = link;
     popupPhotoImg.alt = name + ' фото';
     popupPhotoText.textContent = name;

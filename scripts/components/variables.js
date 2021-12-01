@@ -44,4 +44,4 @@ const submitAvatarButton = popupEditAvatarProfileEdit.querySelector('.popup__but
 export {editButton, submitButton, submitAddElementButton, addButton, popupPhotoImg, popupPhotoText, 
   profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, 
   popupAddElementInputName, popupAddElementInputDescription , element, popupProfile, popupPhoto, popupProfileEdit,
-  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup};
+  avatar, popupEditAvatar, avatarImage, popupEditAvatarInputUrl, popup, popupEditAvatarContainer, popupProfileContainer, popupAddElementContainer};
