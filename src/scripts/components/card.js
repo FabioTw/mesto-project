@@ -1,29 +1,34 @@
 import {popupPhotoImg, popupPhotoText, elements, popupPhoto} from './variables.js'
 import {openPopup} from './utils.js'
+
+const karachevsk = new URL('./../../images/karachevsk.png', import.meta.url);
+const elbrus = new URL('./../../images/elbrus.png', import.meta.url);
+const dombai = new URL('./../../images/dombai.png', import.meta.url)
+
 const initialCards = [
   {
     name: 'Карачаевск',
-    link: './images/karachevsk.png'
+    link: karachevsk
   },
   {
     name: 'Гора Эльбрус',
-    link: './images/elbrus.png'
+    link: elbrus
   },
   {
     name: 'Домбай',
-    link: './images/dombai.png'
+    link: dombai
   },
   {
     name: 'Гора Эльбрус',
-    link: './images/elbrus.png'
+    link: elbrus
   },
   {
     name: 'Домбай',
-    link: './images/dombai.png'
+    link: dombai
   },
   {
     name: 'Карачаево-Ч...',
-    link: './images/karachevsk.png'
+    link: karachevsk
   }
 ]; 
 

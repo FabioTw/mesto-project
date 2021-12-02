@@ -6,19 +6,19 @@
   <meta name="description" content="Страница о том как научиться учиться">
   <meta name="keywords" content="yandex praktikum, CSS, HTML">
   <meta name="author" content="Eugene C.">
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
   <title>Место</title>
 </head>
 <body>
   <div class="page">
     <header class="header">
-      <img src="./images/logo.svg" alt="Логотип сайта" class="header__logo">
+      <img src="<%=require('./images/logo.svg')%>" alt="Логотип сайта" class="header__logo">
     </header>
     <section class="profile">
       <div class="profile__author">
         <div class="profile__avatar-container">
-          <img class="profile__avatar" alt="фото профиля" src="./images/avatar.png">
-          <img class="profile__avatar-edit" alt="изменить аватар" src="./images/edit.svg">
+          <img class="profile__avatar" alt="фото профиля" src="<%=require('./images/avatar.png')%>">
+          <img class="profile__avatar-edit" alt="изменить аватар" src="<%=require('./images/edit.svg')%>">
         </div>
         <div class="profile__container">
           <div class="profile__info">
@@ -32,7 +32,7 @@
     </section>
     <section class="elements">
       <div class="element hidden">
-        <img src="./images/karachevsk.png" alt="фото Карачевска" class="element__photo">
+        <img src="<%=require('./images/karachevsk.png')%>" alt="фото Карачевска" class="element__photo">
         <div class="element__description">
           <h2 class="element__text">Карачаевск</h2>
           <input type="button" class="element__button" value=" ">
@@ -105,14 +105,14 @@
   </div>
   <template id="element-template">
     <div class="element">
-      <img src="./images/karachevsk.png" alt="фото Карачевска" class="element__photo">
-      <img src="images/delete.svg" class="element__delete" alt="кнопка Удаления">
+      <img src="<%=require('./images/karachevsk.png')%>" alt="фото Карачевска" class="element__photo">
+      <img src="<%=require('./images/delete.svg')%>" class="element__delete" alt="кнопка Удаления">
       <div class="element__description">
         <h2 class="element__text">Карачаево-Ч...</h2>
         <input type="button" class="element__button" value=" ">
       </div>
     </div>
   </template>
-  <script type="module" src="./scripts/script.js"></script>
+  <!-- <script type="module" src="./scripts/script.js"></script> -->
 </body>
 </html>
