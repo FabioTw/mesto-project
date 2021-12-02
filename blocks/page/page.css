@@ -1,9 +1,0 @@
-.page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: Inter, Arial, sans-serif;
-    font-weight: 400;
-    background-color: #000;
-    color: #FFFFFF;
-}
