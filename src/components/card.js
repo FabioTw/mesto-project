@@ -12,14 +12,14 @@ getInitialCards(elements)
     console.log(err);
   }); 
 
-export function createStandartElements(name, link, isNew, owner_id = myProfileId, card_id, likes = []) {
+export function createStandartElements(name, link, isNew, ownerId = myProfileId, cardId, likes = []) {
   const elementTemplate = document.querySelector('#element-template').content;
   const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
   const deleteButton = elementCard.querySelector('.element__delete');
   const likeButton = elementCard.querySelector('.element__button');
   const likesText = elementCard.querySelector('.element__likes');
 
-  checkDeleteButton(deleteButton, owner_id)
+  checkDeleteButton(deleteButton, ownerId)
 
   elementCard.querySelector('.element__text').textContent = name;
   elementCard.querySelector('.element__photo').src = link; 
@@ -35,7 +35,7 @@ export function createStandartElements(name, link, isNew, owner_id = myProfileId
   }
   likeButton.addEventListener('click', function(evt) {
     if (evt.target.classList.contains('element__button_activated')){
-      deleteLike(card_id)
+      deleteLike(cardId)
       .then (res => {
         evt.target.classList.remove('element__button_activated');
         likesText.textContent = res.likes.length;
@@ -44,7 +44,7 @@ export function createStandartElements(name, link, isNew, owner_id = myProfileId
         console.log(err)
       });
     } else {
-      addLike(card_id)
+      addLike(cardId)
       .then (res => {
         evt.target.classList.add('element__button_activated');
         likesText.textContent = res.likes.length;
@@ -57,7 +57,7 @@ export function createStandartElements(name, link, isNew, owner_id = myProfileId
   likesText.textContent = likes.length;
 
   deleteButton.addEventListener('click', function () {
-    deleteCard(card_id)
+    deleteCard(cardId)
     .then (res => {
       const listItem = deleteButton.closest('.element');
       listItem.remove();
@@ -69,15 +69,15 @@ export function createStandartElements(name, link, isNew, owner_id = myProfileId
   return elementCard;
 }
 
-function checkDeleteButton(deleteButton, profile_id) {
-  if (profile_id !== myProfileId) {
+function checkDeleteButton(deleteButton, profileId) {
+  if (profileId !== myProfileId) {
     deleteButton.parentNode.removeChild(deleteButton)
   }
 }
 
-function checkLikeButton(profile_id, likes, likeButton) {
+function checkLikeButton(profileId, likes, likeButton) {
   likes.forEach(element => {
-    if (element._id === profile_id) {
+    if (element._id === profileId) {
       likeButton.classList.add('element__button_activated');
     } else {
       likeButton.classList.remove('element__button_activated');
