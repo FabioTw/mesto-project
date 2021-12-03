@@ -1,11 +1,10 @@
 import {openPopup, closePopup, renderLoading} from './utils.js';
-import {data} from '../script.js';
+import {data} from './index.js';
 import {profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, popupAddElementInputName, 
   popupAddElementInputDescription , element, popupProfile, popupPhoto, popupEditAvatar, avatarImage, popupEditAvatarInputUrl, myProfileId, 
   submitAddElementButton, submitButton, submitAvatarButton} from './variables.js';
 import {createStandartElements} from './card.js';
-import {updateProfile, updateProfileAvatar, addCard} from './api.js';
-
+import {updateProfile, updateProfileAvatar, addCard, getProfile} from './api.js';
 
 function editProfilePopup() {
   openPopup(popupProfile);
@@ -25,6 +24,12 @@ function addElement (event) {
       if (event.target.querySelector(data.submitButtonSelector) !== null) {
         innactiveButton(event.target.querySelector(data.submitButtonSelector));
       }
+    })
+    .finally (res => {
+      renderLoading(false, submitAddElementButton)
+    })
+    .catch ((err) => {
+      console.log(err)
     });
   };
 }
@@ -52,12 +57,18 @@ function closeAddElementPopup(evt) {
 function editProfileSubmitButton (event) {
   event.preventDefault(); 
   if (!(event.target.closest('.popup__button_disabled'))) {
-    profileName.textContent = popupProfileInputName.value;
-    profileDescription.textContent = popupProfileInputDescription.value;
     renderLoading(true, submitButton);
     updateProfile(popupProfileInputName.value, popupProfileInputDescription.value)
     .then (res => {
-      closePopup(popupProfile)});
+      profileName.textContent = popupProfileInputName.value;
+      profileDescription.textContent = popupProfileInputDescription.value;
+      closePopup(popupProfile)})
+    .finally (res => {
+      renderLoading(false, submitButton)
+    }) 
+    .catch ((err) => {
+      console.log(err)
+    });
   };
 }
 //закрытие попапов
@@ -99,14 +110,21 @@ function submitAvatar (evt) {
   evt.preventDefault(); 
   if (!(evt.target.closest('.popup__button_disabled'))) {
     renderLoading(true, submitAvatarButton);
-    updateProfileAvatar(avatarImage.src)
+    updateProfileAvatar(popupEditAvatarInputUrl.value)
     .then (res => {
+      console.log(res)
       avatarImage.src = popupEditAvatarInputUrl.value;
       closePopup(popupEditAvatar);
       resetPopupFields(popupEditAvatarInputUrl, popupEditAvatarInputUrl);
       if (evt.target.querySelector(data.submitButtonSelector) !== null) {
         innactiveButton(evt.target.querySelector(data.submitButtonSelector));
       }})
+    .finally (res => {
+      renderLoading(false, submitAvatarButton)
+    })
+    .catch ((err) => {
+      console.log(err)
+    });
   };
 }
 
