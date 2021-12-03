@@ -1,4 +1,4 @@
-import {switchPopup, renderLoading} from './utils.js';
+import {openPopup, closePopup, renderLoading} from './utils.js';
 import {data} from '../script.js';
 import {profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, popupAddElementInputName, 
   popupAddElementInputDescription , element, popupProfile, popupPhoto, popupEditAvatar, avatarImage, popupEditAvatarInputUrl, myProfileId, 
@@ -8,7 +8,7 @@ import {updateProfile, updateProfileAvatar, addCard} from './api.js';
 
 
 function editProfilePopup() {
-  switchPopup(popupProfile);
+  openPopup(popupProfile);
   popupProfileInputName.value = profileName.textContent;
   popupProfileInputDescription.value = profileDescription.textContent;
 }
@@ -20,20 +20,32 @@ function addElement (event) {
     addCard(popupAddElementInputName.value, popupAddElementInputDescription.value)
     .then(res => {
       elements.insertBefore(createStandartElements(res.name, res.link, true, myProfileId, res._id), element);
-      switchPopup(popupAddElement);
+      closePopup(popupAddElement);
       resetPopupFields (popupAddElementInputName, popupAddElementInputDescription);
+      if (event.target.querySelector(data.submitButtonSelector) !== null) {
+        innactiveButton(event.target.querySelector(data.submitButtonSelector));
+      }
     });
   };
 }
 //открытие попапа для добавление карточек
-function addElementPopup(evt) {
+function openAddElementPopup(evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
-    switchPopup(popupAddElement);
+    openPopup(popupAddElement);
   };
   if (submitAddElementButton.value === 'Сохранить') { //проверяет сохраняется карточка или нет для того чтобы не делать кнопку серой во время сохранения
     if (evt.target.closest(data.submitButtonSelector) !== null) {
       innactiveButton(evt.target.closest(data.submitButtonSelector));
     }
+  }
+}
+
+function closeAddElementPopup(evt) {
+  if (!(evt.target.closest('.popup__profile-edit'))) {
+    closePopup(popupAddElement);
+  };
+  if (evt.target.querySelector(data.submitButtonSelector) !== null) {
+    innactiveButton(evt.target.querySelector(data.submitButtonSelector));
   }
 }
 //редактирование профиля
@@ -44,19 +56,20 @@ function editProfileSubmitButton (event) {
     profileDescription.textContent = popupProfileInputDescription.value;
     renderLoading(true, submitButton);
     updateProfile(popupProfileInputName.value, popupProfileInputDescription.value)
-    .then (res => {(switchPopup(popupProfile))});
+    .then (res => {
+      closePopup(popupProfile)});
   };
 }
 //закрытие попапов
 function closePopupPhoto(evt) {
   if (!(evt.target.closest('.popup__picture-img'))) {
-  switchPopup(popupPhoto);
+    closePopup(popupPhoto);
   };
 }
 
 function closePopupProfile (evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
-    switchPopup(popupProfile);
+    closePopup(popupProfile);
   };
 }
 
@@ -67,7 +80,7 @@ function resetPopupFields (field1, field2) {
 
 function openAvatarPopup (evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
-    switchPopup(popupEditAvatar);
+    openPopup(popupEditAvatar);
   };
   if (submitAvatarButton.value === 'Сохранить') {
     if (evt.target.closest(data.submitButtonSelector) !== null) {
@@ -76,20 +89,30 @@ function openAvatarPopup (evt) {
   }
 }
 
+function closeAvatarPopup (evt) {
+  if (!(evt.target.closest('.popup__profile-edit'))) {
+    closePopup(popupEditAvatar);
+  };
+}
+
 function submitAvatar (evt) {
   evt.preventDefault(); 
   if (!(evt.target.closest('.popup__button_disabled'))) {
-    avatarImage.src = popupEditAvatarInputUrl.value;
     renderLoading(true, submitAvatarButton);
     updateProfileAvatar(avatarImage.src)
     .then (res => {
-      switchPopup(popupEditAvatar);
-      resetPopupFields(popupEditAvatarInputUrl, popupEditAvatarInputUrl);})
+      avatarImage.src = popupEditAvatarInputUrl.value;
+      closePopup(popupEditAvatar);
+      resetPopupFields(popupEditAvatarInputUrl, popupEditAvatarInputUrl);
+      if (evt.target.querySelector(data.submitButtonSelector) !== null) {
+        innactiveButton(evt.target.querySelector(data.submitButtonSelector));
+      }})
   };
 }
 
 function innactiveButton (button) {
   button.classList.add(data.inactiveButtonClass);
+  button.setAttribute("disabled", "disabled");
 }
 
-export {editProfilePopup, addElement, addElementPopup, editProfileSubmitButton, closePopupPhoto, closePopupProfile, openAvatarPopup, submitAvatar};
+export {editProfilePopup, addElement, openAddElementPopup, closeAddElementPopup, editProfileSubmitButton, closePopupPhoto, closePopupProfile, openAvatarPopup, closeAvatarPopup, submitAvatar};

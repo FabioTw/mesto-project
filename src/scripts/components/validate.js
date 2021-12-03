@@ -1,4 +1,5 @@
 import {data} from '../script.js'
+import {renderLoading} from './utils.js';
 
 export function enableValidation (data) {
   const formList = Array.from(document.querySelectorAll(data.formSelector))
@@ -47,8 +48,10 @@ function toggleButtonState (inputList, formElement) {
   const buttonElement = formElement.querySelector(data.submitButtonSelector);
   if (hasInvalidInput(inputList)) {
       buttonElement.classList.add(data.inactiveButtonClass);
+      buttonElement.setAttribute("disabled", "disabled");
   } else {
-      buttonElement.classList.remove(data.inactiveButtonClass);  
+      buttonElement.classList.remove(data.inactiveButtonClass);
+      buttonElement.removeAttribute("disabled", "disabled");  
   }
 }
 

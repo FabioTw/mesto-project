@@ -1,32 +1,33 @@
 
-import {editProfilePopup, addElement, addElementPopup, editProfileSubmitButton, closePopupPhoto, closePopupProfile, openAvatarPopup, submitAvatar} from './modal.js';
-import {editButton, submitButton, submitAddElementButton, addButton, popupAddElement, popupPhoto, popupProfile, avatar, submitAvatarButton, popupEditAvatar, popup} from './variables.js';
+import {editProfilePopup, addElement, openAddElementPopup, closeAddElementPopup, editProfileSubmitButton, closePopupPhoto, closePopupProfile, openAvatarPopup, closeAvatarPopup, submitAvatar} from './modal.js';
+import {editButton, addButton, popupAddElement, popupPhoto, popupProfile, avatar, popupEditAvatar, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer} from './variables.js';
 
 editButton.addEventListener('click', editProfilePopup);
-submitButton.addEventListener('click', editProfileSubmitButton);
-submitAddElementButton.addEventListener('click', addElement);
-submitAvatarButton.addEventListener('click', submitAvatar);
-addButton.addEventListener('click', addElementPopup);
-popupAddElement.addEventListener('click', addElementPopup);
+popupProfileContainer.addEventListener('submit', editProfileSubmitButton);
+popupAddElementContainer.addEventListener('submit', addElement);
+popupEditAvatarContainer.addEventListener('submit', submitAvatar);
+addButton.addEventListener('click', openAddElementPopup);
+popupAddElement.addEventListener('click', closeAddElementPopup);
 popupPhoto.addEventListener('click', closePopupPhoto);
 popupProfile.addEventListener('click', closePopupProfile);
 avatar.addEventListener('click', openAvatarPopup);
-popupEditAvatar.addEventListener('click', openAvatarPopup);
-
-document.addEventListener('keyup', closeEscButton);
+popupEditAvatar.addEventListener('click', closeAvatarPopup);
 
 function closeEscButton (event) {
-  popup.forEach(element => {
-    if (element.classList.contains('popup_opened')) {
-      if (event.key == 'Escape') {
-        switchPopup(element);
-      }
-    }
-  });
+  if (event.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
 };
 
-function switchPopup(popup) {
-  popup.classList.toggle('popup_opened');
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closeEscButton);
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeEscButton);
 }
 
 function renderLoading(isLoading, button) {
@@ -39,4 +40,4 @@ function renderLoading(isLoading, button) {
   }
 }
 
-export {switchPopup, renderLoading};
+export {openPopup, closePopup, renderLoading};

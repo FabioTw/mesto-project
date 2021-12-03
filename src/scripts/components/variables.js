@@ -46,4 +46,4 @@ const myProfileId = '34b8f5f953de44277455cfdc';
 export {editButton, submitButton, submitAddElementButton, addButton, popupPhotoImg, popupPhotoText, 
   profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, 
   popupAddElementInputName, popupAddElementInputDescription , element, popupProfile, popupPhoto, popupProfileEdit,
-  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, myProfileId};
+  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, myProfileId, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer};

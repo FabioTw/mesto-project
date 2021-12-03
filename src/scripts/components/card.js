@@ -1,5 +1,5 @@
 import {popupPhotoImg, popupPhotoText, elements, popupPhoto, myProfileId} from './variables.js'
-import {switchPopup} from './utils.js'
+import {openPopup} from './utils.js'
 import {getInitialCards, deleteCard, addLike, deleteLike,} from './api.js'
 
 getInitialCards(elements)
@@ -17,7 +17,7 @@ export function createStandartElements(name, link, isNew, owner_id = myProfileId
   elementCard.querySelector('.element__photo').src = link; 
   elementCard.querySelector('.element__photo').alt = name + ' фото'; 
   elementCard.querySelector('.element__photo').addEventListener('click', function(evt) {
-    switchPopup(popupPhoto);
+    openPopup(popupPhoto);
     popupPhotoImg.src = link;
     popupPhotoImg.alt = name + ' фото';
     popupPhotoText.textContent = name;
