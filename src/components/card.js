@@ -3,6 +3,14 @@ import {openPopup} from './utils.js'
 import {getInitialCards, deleteCard, addLike, deleteLike,} from './api.js'
 
 getInitialCards(elements)
+  .then((result) => {
+    result.forEach(value => {
+      elements.append(createStandartElements(value.name, value.link, false, value.owner._id, value._id, value.likes));
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  }); 
 
 export function createStandartElements(name, link, isNew, owner_id = myProfileId, card_id, likes = []) {
   const elementTemplate = document.querySelector('#element-template').content;
@@ -28,20 +36,35 @@ export function createStandartElements(name, link, isNew, owner_id = myProfileId
   likeButton.addEventListener('click', function(evt) {
     if (evt.target.classList.contains('element__button_activated')){
       deleteLike(card_id)
-      evt.target.classList.remove('element__button_activated');
-      likesText.textContent = Number(likesText.textContent) - 1;
+      .then (res => {
+        evt.target.classList.remove('element__button_activated');
+        likesText.textContent = res.likes.length;
+      })
+      .catch ((err) => {
+        console.log(err)
+      });
     } else {
       addLike(card_id)
-      evt.target.classList.add('element__button_activated');
-      likesText.textContent = Number(likesText.textContent) + 1;
+      .then (res => {
+        evt.target.classList.add('element__button_activated');
+        likesText.textContent = res.likes.length;
+      })
+      .catch ((err) => {
+        console.log(err)
+      });
     }
   });
   likesText.textContent = likes.length;
 
   deleteButton.addEventListener('click', function () {
-    const listItem = deleteButton.closest('.element');
-    listItem.remove();
-    deleteCard(card_id);
+    deleteCard(card_id)
+    .then (res => {
+      const listItem = deleteButton.closest('.element');
+      listItem.remove();
+    })     
+    .catch ((err) => {
+      console.log(err)
+    });
   }); 
   return elementCard;
 }

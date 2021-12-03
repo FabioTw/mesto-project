@@ -1,4 +1,4 @@
-import {data} from '../script.js'
+import {data} from './index.js'
 import {renderLoading} from './utils.js';
 
 export function enableValidation (data) {

@@ -1,7 +1,3 @@
-import {profileDescription, profileName, avatarImage, submitAddElementButton, submitButton, submitAvatarButton} from './variables.js';
-import {createStandartElements} from './card.js'
-import {renderLoading} from './utils.js'
-
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-4',
   header : {
@@ -10,11 +6,7 @@ const config = {
   }
 }
 
-function setNetProfile(res) {
-  profileName.textContent = res.name;
-  profileDescription.textContent = res.about;
-  avatarImage.src = res.avatar;
-}
+
 
 function checkResult(res) {
   if (res.ok) {
@@ -30,14 +22,6 @@ export const getInitialCards = (elements) => {
   .then(res => {
     return checkResult(res)
   })
-  .then((result) => {
-    result.forEach(value => {
-      elements.append(createStandartElements(value.name, value.link, false, value.owner._id, value._id, value.likes));
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  }); 
 }
 
 export const addCard = (name, link) => {
@@ -52,9 +36,6 @@ export const addCard = (name, link) => {
   .then(res => {
     return checkResult(res)
   })
-  .finally (res => {
-    renderLoading(false, submitAddElementButton)
-  }); 
 }
 
 export const deleteCard = (card_id) => {
@@ -74,9 +55,6 @@ export const getProfile = () => {
     .then(res => {
       return checkResult(res)
     })
-    .then((result) => {
-      setNetProfile(result);
-    }); 
 }
 
 export const updateProfile = (name, about) => {
@@ -91,9 +69,6 @@ export const updateProfile = (name, about) => {
   .then(res => {
     return checkResult(res)
   })
-  .finally (res => {
-    renderLoading(false, submitButton)
-  }); 
 }
 
 export const updateProfileAvatar = (link) => {
@@ -107,9 +82,6 @@ export const updateProfileAvatar = (link) => {
   .then(res => {
     return checkResult(res)
   })
-  .finally (res => {
-    renderLoading(false, submitAvatarButton)
-  });
 }
 
 export const addLike = (card_id) => {
@@ -132,4 +104,3 @@ export const deleteLike = (card_id) => {
   });
 }
 
-getProfile();
