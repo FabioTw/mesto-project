@@ -4,15 +4,6 @@ import {openPopup} from './utils.js'
 import {getInitialCards, deleteCard, addLike, deleteLike,} from './api.js'
 
 
-getInitialCards(elements)
-  .then((result) => {
-    result.forEach(value => {
-      elements.append(createStandartElements(value.name, value.link, false, value.owner._id, value._id, value.likes));
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  }); 
 
 export function createStandartElements(name, link, isNew, ownerId = data.id, cardId, likes = []) {
   const elementTemplate = document.querySelector('#element-template').content;
