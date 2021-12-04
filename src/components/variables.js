@@ -41,9 +41,7 @@ const submitAddElementButton = popupAddElementProfileEdit.querySelector('.popup_
 
 const submitAvatarButton = popupEditAvatarProfileEdit.querySelector('.popup__button');
 
-const myProfileId = '34b8f5f953de44277455cfdc';
-
 export {editButton, submitButton, submitAddElementButton, addButton, popupPhotoImg, popupPhotoText, 
   profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, 
   popupAddElementInputName, popupAddElementInputDescription , element, popupProfile, popupPhoto, popupProfileEdit,
-  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, myProfileId, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer};
+  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer};

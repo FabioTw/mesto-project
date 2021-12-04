@@ -1,7 +1,7 @@
 import {openPopup, closePopup, renderLoading} from './utils.js';
 import {data} from './index.js';
 import {profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, popupAddElementInputName, 
-  popupAddElementInputDescription , element, popupProfile, popupPhoto, popupEditAvatar, avatarImage, popupEditAvatarInputUrl, myProfileId, 
+  popupAddElementInputDescription , element, popupProfile, popupPhoto, popupEditAvatar, avatarImage, popupEditAvatarInputUrl, 
   submitAddElementButton, submitButton, submitAvatarButton} from './variables.js';
 import {createStandartElements} from './card.js';
 import {updateProfile, updateProfileAvatar, addCard, getProfile} from './api.js';
@@ -18,7 +18,7 @@ function addElement (event) {
     renderLoading(true, submitAddElementButton);
     addCard(popupAddElementInputName.value, popupAddElementInputDescription.value)
     .then(res => {
-      elements.insertBefore(createStandartElements(res.name, res.link, true, myProfileId, res._id), element);
+      elements.insertBefore(createStandartElements(res.name, res.link, true, data.id, res._id), element);
       closePopup(popupAddElement);
       resetPopupFields (popupAddElementInputName, popupAddElementInputDescription);
       if (event.target.querySelector(data.submitButtonSelector) !== null) {

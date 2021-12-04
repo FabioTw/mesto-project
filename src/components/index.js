@@ -16,11 +16,13 @@ export const data = {
   errorClass: 'popup__error_visible'
 };
 
-validate.enableValidation(data); 
+let myProfileId
 
 api.getProfile()
 .then((result) => {
   setNetProfile(result);
+  validate.enableValidation(data); 
+  console.log(data)
 })
 .catch ((err) => {
   console.log(err)
@@ -30,5 +32,6 @@ function setNetProfile(res) {
   variables.profileName.textContent = res.name;
   variables.profileDescription.textContent = res.about;
   variables.avatarImage.src = res.avatar;
+  myProfileId = String(res._id);
+  data.id = myProfileId
 }
-
