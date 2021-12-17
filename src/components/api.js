@@ -6,8 +6,6 @@ const config = {
   }
 }
 
-
-
 function checkResult(res) {
   if (res.ok) {
     return res.json();
@@ -104,3 +102,35 @@ export const deleteLike = (card_id) => {
   });
 }
 
+class Api {
+  constructor(config) {
+    this.config = config;
+  }
+
+  _checkResult(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  getProfile() {
+    return fetch(`${config.baseUrl}/users/me`, {
+      headers: this.config.header
+    })
+    .then(res => {
+      return this._checkResult(res);
+    });
+  }
+}
+const api = new Api(config);
+console.log(api.getProfile());
+
+// export const getProfile = () => {
+//   return fetch(`${config.baseUrl}/users/me`, {
+//     headers: config.header
+//   })
+//     .then(res => {
+//       return checkResult(res)
+//     })
+// }
