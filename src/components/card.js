@@ -34,7 +34,6 @@ class Card {
   }
 
   _getElement() {
-    // console.log(this._template);
     const elementTemplate = document.querySelector(this._template).content;
     
     const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
@@ -52,7 +51,6 @@ class Card {
 
 
   _handlePopup() {
-    console.log(this._link);
     openPopup(popupPhoto);
     popupPhotoImg.src = this._link;
     popupPhotoImg.alt = this._name + ' фото';
