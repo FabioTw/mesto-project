@@ -13,14 +13,18 @@ class Card {
     this._ownerId = ownerId;
     this._cardId = cardId;
     this._myProfileId = myProfileId;
+
   }
 
   generate() {
+
     this._element = this._getElement();
     this._likeButton = this._element.querySelector('.element__button');
     this._deleteButton = this._element.querySelector('.element__delete');
     this._likesText = this._element.querySelector('.element__likes');
+
     this._checkDeleteButton();
+
     if (!this._isNew) {
       this._checkLikeButton()
     }
@@ -30,7 +34,9 @@ class Card {
   }
 
   _getElement() {
+    // console.log(this._template);
     const elementTemplate = document.querySelector(this._template).content;
+    
     const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
     elementCard.querySelector('.element__text').textContent = this._name;
     elementCard.querySelector('.element__photo').src = this._link; 
@@ -39,17 +45,18 @@ class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.element__photo').addEventListener('click', this._handlePopup);
+    this._element.querySelector('.element__photo').addEventListener('click', () =>  this._handlePopup());
     this._likeButton.addEventListener('click', (evt) => this._handleLike(evt));
-    this._deleteButton.addEventListener('click', this._handleDelete);
+    this._deleteButton.addEventListener('click', () =>  this._handleDelete());
   }
 
 
   _handlePopup() {
+    console.log(this._link);
     openPopup(popupPhoto);
-    popupPhotoImg.src = this.link;
-    popupPhotoImg.alt = this.name + ' фото';
-    popupPhotoText.textContent = this.name;
+    popupPhotoImg.src = this._link;
+    popupPhotoImg.alt = this._name + ' фото';
+    popupPhotoText.textContent = this._name;
   }
 
   // проверяем и удаляем кнопку удаления
@@ -72,7 +79,7 @@ class Card {
 
   _checkLikeButton() {
     this._likes.forEach(element => {
-      if (element._id === this.profileId) {
+      if (element._id === this._myProfileId) {
         this._likeButton.classList.add('element__button_activated');
       } else {
         this._likeButton.classList.remove('element__button_activated');
@@ -103,11 +110,9 @@ class Card {
   }
 }
 
-const card = new Card ('', '', false,'','', [],'', '#element-template');
-console.log(card.generate())
 
 export function createStandartElements(name, link, isNew, ownerId = data.id, cardId, likes = []) {
-  const card = new Card (name, link, isNew, ownerId = data.id, cardId, likes = []);
+  const card = new Card (name, link, isNew, ownerId, cardId, likes, data.id, '#element-template');
   return card.generate();
 }
 
