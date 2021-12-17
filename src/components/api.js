@@ -125,12 +125,3 @@ class Api {
 }
 const api = new Api(config);
 console.log(api.getProfile());
-
-// export const getProfile = () => {
-//   return fetch(`${config.baseUrl}/users/me`, {
-//     headers: config.header
-//   })
-//     .then(res => {
-//       return checkResult(res)
-//     })
-// }
