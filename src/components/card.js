@@ -107,59 +107,8 @@ const card = new Card ('', '', false,'','', [],'', '#element-template');
 console.log(card.generate())
 
 export function createStandartElements(name, link, isNew, ownerId = data.id, cardId, likes = []) {
-  const elementTemplate = document.querySelector('#element-template').content;
-  const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
-  const deleteButton = elementCard.querySelector('.element__delete');
-  const likeButton = elementCard.querySelector('.element__button');
-  const likesText = elementCard.querySelector('.element__likes');
-  // console.log(myProfileId)
-  checkDeleteButton(deleteButton, ownerId, data.id)
-  elementCard.querySelector('.element__text').textContent = name;
-  elementCard.querySelector('.element__photo').src = link; 
-  elementCard.querySelector('.element__photo').alt = name + ' фото'; 
-  elementCard.querySelector('.element__photo').addEventListener('click', function(evt) {
-    openPopup(popupPhoto);
-    popupPhotoImg.src = link;
-    popupPhotoImg.alt = name + ' фото';
-    popupPhotoText.textContent = name;
-  });
-  if (!isNew) {
-    checkLikeButton(data.id, likes, likeButton)
-  }
-  likeButton.addEventListener('click', function(evt) {
-    if (evt.target.classList.contains('element__button_activated')){
-      myApi.deleteLike(cardId)
-      .then (res => {
-        evt.target.classList.remove('element__button_activated');
-        likesText.textContent = res.likes.length;
-      })
-      .catch ((err) => {
-        console.log(err)
-      });
-    } else {
-      myApi.addLike(cardId)
-      .then (res => {
-        evt.target.classList.add('element__button_activated');
-        likesText.textContent = res.likes.length;
-      })
-      .catch ((err) => {
-        console.log(err)
-      });
-    }
-  });
-  likesText.textContent = likes.length;
-
-  deleteButton.addEventListener('click', function () {
-    myApi.deleteCard(cardId)
-    .then (res => {
-      const listItem = deleteButton.closest('.element');
-      listItem.remove();
-    })     
-    .catch ((err) => {
-      console.log(err)
-    });
-  }); 
-  return elementCard;
+  const card = new Card (name, link, isNew, ownerId = data.id, cardId, likes = []);
+  return card.generate();
 }
 
 function checkDeleteButton(deleteButton, profileId, myProfileId) {
