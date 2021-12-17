@@ -1,3 +1,5 @@
+import * as api from './api.js';
+
 const popup = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('.popup_editElement');
 const popupProfileContainer = popupProfile.querySelector('.popup__container');
@@ -41,7 +43,9 @@ const submitAddElementButton = popupAddElementProfileEdit.querySelector('.popup_
 
 const submitAvatarButton = popupEditAvatarProfileEdit.querySelector('.popup__button');
 
+const myApi = new api.Api(api.config);
+
 export {editButton, submitButton, submitAddElementButton, addButton, popupPhotoImg, popupPhotoText, 
   profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, 
   popupAddElementInputName, popupAddElementInputDescription , element, popupProfile, popupPhoto, popupProfileEdit,
-  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer};
+  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer, myApi};

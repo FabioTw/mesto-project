@@ -1,4 +1,4 @@
-import {popupPhotoImg, popupPhotoText, elements, popupPhoto} from './variables.js'
+import {popupPhotoImg, popupPhotoText, elements, popupPhoto, myApi} from './variables.js'
 import {data} from './index.js';
 import {openPopup} from './utils.js'
 import {getInitialCards, deleteCard, addLike, deleteLike,} from './api.js'
@@ -27,7 +27,7 @@ export function createStandartElements(name, link, isNew, ownerId = data.id, car
   }
   likeButton.addEventListener('click', function(evt) {
     if (evt.target.classList.contains('element__button_activated')){
-      deleteLike(cardId)
+      myApi.deleteLike(cardId)
       .then (res => {
         evt.target.classList.remove('element__button_activated');
         likesText.textContent = res.likes.length;
@@ -36,7 +36,7 @@ export function createStandartElements(name, link, isNew, ownerId = data.id, car
         console.log(err)
       });
     } else {
-      addLike(cardId)
+      myApi.addLike(cardId)
       .then (res => {
         evt.target.classList.add('element__button_activated');
         likesText.textContent = res.likes.length;
@@ -49,7 +49,7 @@ export function createStandartElements(name, link, isNew, ownerId = data.id, car
   likesText.textContent = likes.length;
 
   deleteButton.addEventListener('click', function () {
-    deleteCard(cardId)
+    myApi.deleteCard(cardId)
     .then (res => {
       const listItem = deleteButton.closest('.element');
       listItem.remove();
