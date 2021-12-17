@@ -2,7 +2,7 @@ import {openPopup, closePopup, renderLoading} from './utils.js';
 import {data} from './index.js';
 import {profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, popupAddElementInputName, 
   popupAddElementInputDescription , element, popupProfile, popupPhoto, popupEditAvatar, avatarImage, popupEditAvatarInputUrl, 
-  submitAddElementButton, submitButton, submitAvatarButton} from './variables.js';
+  submitAddElementButton, submitButton, submitAvatarButton, myApi} from './variables.js';
 import {createStandartElements} from './card.js';
 import {updateProfile, updateProfileAvatar, addCard, getProfile} from './api.js';
 
@@ -16,7 +16,7 @@ function addElement (event) {
   event.preventDefault();
   if (!(event.target.closest('.popup__button_disabled'))) {
     renderLoading(true, submitAddElementButton);
-    addCard(popupAddElementInputName.value, popupAddElementInputDescription.value)
+    myApi.addCard(popupAddElementInputName.value, popupAddElementInputDescription.value)
     .then(res => {
       elements.insertBefore(createStandartElements(res.name, res.link, true, data.id, res._id), element);
       closePopup(popupAddElement);
@@ -58,7 +58,7 @@ function editProfileSubmitButton (event) {
   event.preventDefault(); 
   if (!(event.target.closest('.popup__button_disabled'))) {
     renderLoading(true, submitButton);
-    updateProfile(popupProfileInputName.value, popupProfileInputDescription.value)
+    myApi.updateProfile(popupProfileInputName.value, popupProfileInputDescription.value)
     .then (res => {
       profileName.textContent = popupProfileInputName.value;
       profileDescription.textContent = popupProfileInputDescription.value;
@@ -110,7 +110,7 @@ function submitAvatar (evt) {
   evt.preventDefault(); 
   if (!(evt.target.closest('.popup__button_disabled'))) {
     renderLoading(true, submitAvatarButton);
-    updateProfileAvatar(popupEditAvatarInputUrl.value)
+    myApi.updateProfileAvatar(popupEditAvatarInputUrl.value)
     .then (res => {
       console.log(res)
       avatarImage.src = popupEditAvatarInputUrl.value;

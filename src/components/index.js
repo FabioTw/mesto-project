@@ -18,12 +18,11 @@ export const data = {
 
 let myProfileId
 
-api.getProfile()
+variables.myApi.getProfile()
 .then((result) => {
   setNetProfile(result);
   validate.enableValidation(data); 
-  // console.log(data)
-  api.getInitialCards(variables.elements)
+  variables.myApi.getInitialCards(variables.elements)
   .then((result) => {
     result.forEach(value => {
       variables.elements.append(card.createStandartElements(value.name, value.link, false, value.owner._id, value._id, value.likes));
