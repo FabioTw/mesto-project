@@ -1,10 +1,76 @@
+import { construct } from 'core-js/fn/reflect';
 import {data} from './index.js'
 import {renderLoading} from './utils.js';
+
+class FormValidator {
+  constructor(data, formElement) {
+    this._data = data;
+    this._formElement = formElement;
+  }
+
+  enableValidation() {
+    _setEventListeners();
+  }
+
+  _setEventListeners() {
+    const inputList = Array.from(this._formElement.querySelectorAll(this._data.inputSelector));
+    inputList.forEach((inputElement) => {
+      inputElement.addEventListener('input', function () {
+        this._checkInputValidity(inputElement);
+        this._toggleButtonState(inputList);
+      });
+    });
+  }
+
+  _checkInputValidity (formInput) {
+    if (!formInput.validity.valid) {
+      this._showError(formInput, formInput.validationMessage);
+    } else {
+      this._hideInputError(formInput);
+    }
+  }
+
+  _toggleButtonState (inputList) {
+    const buttonElement = this._formElement.querySelector(this._data.submitButtonSelector);
+    if (this._hasInvalidInput(inputList)) {
+        buttonElement.classList.add(this._data.inactiveButtonClass);
+        buttonElement.setAttribute("disabled", "disabled");
+    } else {
+        buttonElement.classList.remove(this._data.inactiveButtonClass);
+        buttonElement.removeAttribute("disabled", "disabled");  
+    }
+  }
+
+  _showError (inputElement, errorMessage) {
+    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add(this._data.inputErrorClass);
+    setErrorMessage(inputElement, errorElement, errorMessage);
+    errorElement.classList.add(this._data.errorClass);
+  }
+
+
+  _hideInputError (inputElement) {
+    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(this._data.inputErrorClass);
+    errorElement.classList.remove(this._data.errorClass);
+    errorElement.textContent = '';
+  }
+
+  _hasInvalidInput(inputList) {
+    return inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
+    })
+  }
+
+}
+
 
 export function enableValidation (data) {
   const formList = Array.from(document.querySelectorAll(data.formSelector))
   formList.forEach((formElement) => {
     setEventListeners(formElement)
+    //formValidator = new FormValidator(data, formElement);
+    //formValidator.enableValidation();
   })
 }
 
