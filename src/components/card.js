@@ -4,30 +4,26 @@ import {openPopup} from './utils.js'
 import {getInitialCards, deleteCard, addLike, deleteLike,} from './api.js'
 
 class Card {
-  constructor(name, link, isNew, ownerId, cardId, likes = [], myProfileId, template){
-    this._name = name;
-    this._link = link;
+  //{name, link, owner, cardId, likes = [], myProfileId}
+  constructor(value, template, myProfileId){
+    // console.log(result)
+    this._name = value.name;
+    this._link = value.link;
     this._template = template;
-    this._likes = likes;
-    this._isNew = isNew;
-    this._ownerId = ownerId;
-    this._cardId = cardId;
+    this._likes = value.likes;
+    this._ownerId = value.owner._id;
+    this._cardId = value._id;
     this._myProfileId = myProfileId;
-
   }
 
   generate() {
-
     this._element = this._getElement();
     this._likeButton = this._element.querySelector('.element__button');
     this._deleteButton = this._element.querySelector('.element__delete');
     this._likesText = this._element.querySelector('.element__likes');
 
     this._checkDeleteButton();
-
-    if (!this._isNew) {
-      this._checkLikeButton()
-    }
+    this._checkLikeButton();
     this._setEventListeners();
     this._likesText.textContent = this._likes.length;
     return this._element;
@@ -109,8 +105,9 @@ class Card {
 }
 
 
-export function createStandartElements(name, link, isNew, ownerId = data.id, cardId, likes = []) {
-  const card = new Card (name, link, isNew, ownerId, cardId, likes, data.id, '#element-template');
+export function createStandartElements(result) {
+  //console.log(result);
+  const card = new Card (result, '#element-template', data.id);
   return card.generate();
 }
 

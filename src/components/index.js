@@ -22,11 +22,17 @@ variables.myApi.getProfile()
 .then((result) => {
   setNetProfile(result);
   validate.enableValidation(data); 
-  variables.myApi.getInitialCards(variables.elements)
+  // variables.myApi.getInitialCards(variables.elements)
+  // .then((result) => {
+  //   result.forEach(value => {
+  //     variables.elements.append(card.createStandartElements(value));
+  //   });
+  // })
+  variables.myApi.getInitialCards(variables.elements) 
   .then((result) => {
-    result.forEach(value => {
-      variables.elements.append(card.createStandartElements(value.name, value.link, false, value.owner._id, value._id, value.likes));
-    });
+    // console.log({result, renderer : (result) => {card.createStandartElements(result)}});
+    const section = new Section({items: result, renderer : (result) => {return card.createStandartElements(result)}}, variables.elements);   
+    section._addItem()
   })
   .catch((err) => {
     console.log(err);
@@ -43,4 +49,26 @@ function setNetProfile(res) {
   variables.avatarImage.src = res.avatar;
   myProfileId = String(res._id);
   data.id = myProfileId
+}
+
+// variables.myApi.getInitialCards(variables.elements) 
+//   .then((result) => {
+//     // console.log({result, renderer : (result) => {card.createStandartElements(result)}});
+//     const section = new Section({items: result, renderer : (result) => {card.createStandartElements(result)}}, variables.elements);   
+//     section._addItem()
+//   })
+
+
+class Section {
+  constructor({items, renderer}, selector) {
+    this._items = items;
+    this._renderer = renderer;
+    this._selector = selector;
+  }
+
+  addItem() {
+    this._items.forEach(item => {
+      this._selector.append(this._renderer(item));
+    })
+  }
 }
