@@ -32,7 +32,7 @@ variables.myApi.getProfile()
   .then((result) => {
     // console.log({result, renderer : (result) => {card.createStandartElements(result)}});
     const section = new Section({items: result, renderer : (result) => {return card.createStandartElements(result)}}, variables.elements);   
-    section._addItem()
+    section.addItem()
   })
   .catch((err) => {
     console.log(err);

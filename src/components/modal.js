@@ -102,7 +102,7 @@ function openAvatarPopup (evt) {
 
 function closeAvatarPopup (evt) {
   if (!(evt.target.closest('.popup__profile-edit'))) {
-    closePopup(popupEditAvatar);
+    // closePopup(popupEditAvatar);
   };
 }
 
