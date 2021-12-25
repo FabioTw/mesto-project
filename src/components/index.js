@@ -5,7 +5,10 @@ import * as modal from './modal.js'
 import * as validate from './validate.js'
 import * as variables from './variables.js'
 import * as api from './api.js'
-
+import Section from './section.js'
+import Popup from './popup.js'
+import PopupWithImage from './PopupWithImage.js'
+import PopupWithForm from './PopupWithForm.js'
 
 export const data = {
   formSelector: '.popup__container',
@@ -22,17 +25,133 @@ variables.myApi.getProfile()
 .then((result) => {
   setNetProfile(result);
   validate.enableValidation(data); 
-  // variables.myApi.getInitialCards(variables.elements)
-  // .then((result) => {
-  //   result.forEach(value => {
-  //     variables.elements.append(card.createStandartElements(value));
-  //   });
-  // })
+  //инициализируем карточки
   variables.myApi.getInitialCards(variables.elements) 
   .then((result) => {
-    // console.log({result, renderer : (result) => {card.createStandartElements(result)}});
-    const section = new Section({items: result, renderer : (result) => {return card.createStandartElements(result)}}, variables.elements);   
-    section.addItem()
+    // создаем section
+    const section = new Section({items: result, renderer : (result) => {return card.createStandartElements(result)}}, '.elements');   
+    section.renderer();
+    // добавляем листенеры
+    // редактирование профиля
+    const popupEditProfile = new PopupWithForm('.popup_editElement', 
+    (event, values) => {
+      event.preventDefault(); 
+      if (!(event.target.closest('.popup__button_disabled'))) {
+        utils.renderLoading(true, variables.submitButton);
+        variables.myApi.updateProfile(variables.popupProfileInputName.value, variables.popupProfileInputDescription.value)
+        .then (res => {
+          values.forEach(elem => {
+            if (elem.element.name === 'profile-name') {
+              variables.profileName.textContent = elem.value;
+            }
+            if (elem.element.name === 'profile-description') {
+              variables.profileDescription.textContent = elem.value;
+            }
+          });
+          })
+        .finally (res => {
+          popupEditProfile.close();
+          utils.renderLoading(false, variables.submitButton)
+        }) 
+        .catch ((err) => {
+          console.log(err)
+        });
+      };
+    });
+    // открытие профиля
+    variables.editButton.addEventListener('click', () => {
+      variables.popupProfileInputName.value = variables.profileName.textContent;
+      variables.popupProfileInputDescription.value = variables.profileDescription.textContent;      
+      popupEditProfile.open()
+    });
+    popupEditProfile.setEventListeners();
+
+    // добавление карточки
+    const popupAddCard = new PopupWithForm('.popup_addElement', 
+    (event, values) => {
+      event.preventDefault(); 
+      if (!(event.target.closest('.popup__button_disabled'))) {
+        utils.renderLoading(true, variables.submitAddElementButton);
+        variables.myApi.addCard(variables.popupAddElementInputName.value, variables.popupAddElementInputDescription.value)
+        .then(res => {
+          variables.elements.insertBefore(card.createStandartElements(res), variables.element);
+          //popupAddCard.close();
+          //modal.resetPopupFields (popupAddElementInputName, popupAddElementInputDescription);
+          if (event.target.querySelector(data.submitButtonSelector) !== null) {
+            modal.innactiveButton(event.target.querySelector(data.submitButtonSelector));
+          }
+        })
+        .finally (res => {
+          popupAddCard.close();
+          utils.renderLoading(false, variables.submitAddElementButton)
+        }) 
+        .catch ((err) => {
+          console.log(err)
+        });
+      };
+    });
+    popupAddCard.setEventListeners();
+    // открытие добавления карточки
+    variables.addButton.addEventListener('click', () => popupAddCard.open());
+
+    // редактирование аватара
+    const popupEditAvatar= new PopupWithForm('.popup_editAvatar', 
+    (event, values) => {
+      event.preventDefault(); 
+      if (!(event.target.closest('.popup__button_disabled'))) {
+        utils.renderLoading(true, variables.submitAvatarButton);
+        variables.myApi.updateProfileAvatar(variables.popupEditAvatarInputUrl.value)
+        .then (res => {
+          values.forEach(elem => {
+            if (elem.element.name === 'profile-description') {
+              variables.avatarImage.src = elem.value;
+            }
+          });
+          if (event.target.querySelector(data.submitButtonSelector) !== null) {
+            modal.innactiveButton(event.target.querySelector(data.submitButtonSelector));
+          }})
+        .finally (res => {
+          popupEditAvatar.close();
+          utils.renderLoading(false, variables.submitAvatarButton)
+        })
+        .catch ((err) => {
+          console.log(err)
+        });
+      };
+    }
+    );
+    popupEditAvatar.setEventListeners();
+    // открытие аватара
+    variables.avatar.addEventListener('click', () => popupEditAvatar.open());
+
+    //добавление карточек
+    function addElement (event) {
+      event.preventDefault();
+      if (!(event.target.closest('.popup__button_disabled'))) {
+        utils.renderLoading(true, variables.submitAddElementButton);
+        variables.myApi.addCard(variables.popupAddElementInputName.value, variables.popupAddElementInputDescription.value)
+        .then(res => {
+
+          const newCard = new card.Card (res , '#element-template', data.id, (link, name) => {
+            const popup = new PopupWithImage('.popup_picture', link, name);
+            popup.setEventListeners();
+            popup.open();
+          });
+          section.addItem(newCard.generate());
+          //popup.close();
+          //modal.resetPopupFields (variables.popupAddElementInputName, variables.popupAddElementInputDescription);
+          if (event.target.querySelector(data.submitButtonSelector) !== null) {
+            modal.innactiveButton(event.target.querySelector(data.submitButtonSelector));
+          }
+        })
+        .finally (res => {
+          utils.renderLoading(false, variables.submitAddElementButton)
+        })
+        .catch ((err) => {
+          console.log(err)
+        });
+      };
+    }
   })
   .catch((err) => {
     console.log(err);
@@ -51,24 +170,3 @@ function setNetProfile(res) {
   data.id = myProfileId
 }
 
-// variables.myApi.getInitialCards(variables.elements) 
-//   .then((result) => {
-//     // console.log({result, renderer : (result) => {card.createStandartElements(result)}});
-//     const section = new Section({items: result, renderer : (result) => {card.createStandartElements(result)}}, variables.elements);   
-//     section._addItem()
-//   })
-
-
-class Section {
-  constructor({items, renderer}, selector) {
-    this._items = items;
-    this._renderer = renderer;
-    this._selector = selector;
-  }
-
-  addItem() {
-    this._items.forEach(item => {
-      this._selector.append(this._renderer(item));
-    })
-  }
-}

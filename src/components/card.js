@@ -2,10 +2,11 @@ import {popupPhotoImg, popupPhotoText, elements, popupPhoto, myApi} from './vari
 import {data} from './index.js';
 import {openPopup} from './utils.js'
 import {getInitialCards, deleteCard, addLike, deleteLike,} from './api.js'
+import PopupWithImage from './PopupWithImage.js'
 
-class Card {
+export class Card {
   //{name, link, owner, cardId, likes = [], myProfileId}
-  constructor(value, template, myProfileId){
+  constructor(value, template, myProfileId, handleCardClick){
     // console.log(result)
     this._name = value.name;
     this._link = value.link;
@@ -14,6 +15,8 @@ class Card {
     this._ownerId = value.owner._id;
     this._cardId = value._id;
     this._myProfileId = myProfileId;
+    this._handleCardClick = handleCardClick;
+    
   }
 
   generate() {
@@ -40,17 +43,9 @@ class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.element__photo').addEventListener('click', () =>  this._handlePopup());
+    this._element.querySelector('.element__photo').addEventListener('click', () => this._handleCardClick(this._link, this._name));
     this._likeButton.addEventListener('click', (evt) => this._handleLike(evt));
     this._deleteButton.addEventListener('click', () =>  this._handleDelete());
-  }
-
-
-  _handlePopup() {
-    openPopup(popupPhoto);
-    popupPhotoImg.src = this._link;
-    popupPhotoImg.alt = this._name + ' фото';
-    popupPhotoText.textContent = this._name;
   }
 
   // проверяем и удаляем кнопку удаления
@@ -107,23 +102,10 @@ class Card {
 
 export function createStandartElements(result) {
   //console.log(result);
-  const card = new Card (result, '#element-template', data.id);
-  return card.generate();
-}
-
-function checkDeleteButton(deleteButton, profileId, myProfileId) {
-  // console.log((profileId) + 'и мой ' + myProfileId)
-  if (profileId !== String(myProfileId)) {
-    deleteButton.parentNode.removeChild(deleteButton)
-  }
-}
-
-function checkLikeButton(profileId, likes, likeButton) {
-  likes.forEach(element => {
-    if (element._id === profileId) {
-      likeButton.classList.add('element__button_activated');
-    } else {
-      likeButton.classList.remove('element__button_activated');
-    }
+  const card = new Card (result, '#element-template', data.id, (link, name) => {
+    const popup = new PopupWithImage('.popup_picture', link, name);
+    popup.setEventListeners();
+    popup.open();
   });
+  return card.generate();
 }
