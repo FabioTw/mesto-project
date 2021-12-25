@@ -9,6 +9,7 @@ import Section from './section.js'
 import Popup from './popup.js'
 import PopupWithImage from './PopupWithImage.js'
 import PopupWithForm from './PopupWithForm.js'
+import UserInfo from './userInfo.js';
 
 export const data = {
   formSelector: '.popup__container',
@@ -21,13 +22,18 @@ export const data = {
 
 let myProfileId
 
+
 variables.myApi.getProfile()
 .then((result) => {
-  setNetProfile(result);
+
+  const user = new UserInfo(result.name, result.about);
+  user.getUserInfo().then(res => {console.log(res)})
+  setNetProfile(result)
   validate.enableValidation(data); 
   //инициализируем карточки
   variables.myApi.getInitialCards(variables.elements) 
   .then((result) => {
+
     // создаем section
     const section = new Section({items: result, renderer : (result) => {return card.createStandartElements(result)}}, '.elements');   
     section.renderer();
@@ -38,7 +44,7 @@ variables.myApi.getProfile()
       event.preventDefault(); 
       if (!(event.target.closest('.popup__button_disabled'))) {
         utils.renderLoading(true, variables.submitButton);
-        variables.myApi.updateProfile(variables.popupProfileInputName.value, variables.popupProfileInputDescription.value)
+        user.setUserInfo(variables.popupProfileInputName.value, variables.popupProfileInputDescription.value)
         .then (res => {
           values.forEach(elem => {
             if (elem.element.name === 'profile-name') {
