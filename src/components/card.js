@@ -1,13 +1,7 @@
-import {popupPhotoImg, popupPhotoText, elements, popupPhoto, myApi} from './variables.js'
-import {data} from './index.js';
-import {openPopup} from './utils.js'
-import {getInitialCards, deleteCard, addLike, deleteLike,} from './api.js'
-import PopupWithImage from './PopupWithImage.js'
+import {myApi} from './variables.js'
 
-export class Card {
-  //{name, link, owner, cardId, likes = [], myProfileId}
+export default class Card {
   constructor(value, template, myProfileId, handleCardClick){
-    // console.log(result)
     this._name = value.name;
     this._link = value.link;
     this._template = template;
@@ -16,7 +10,6 @@ export class Card {
     this._cardId = value._id;
     this._myProfileId = myProfileId;
     this._handleCardClick = handleCardClick;
-    
   }
 
   generate() {
@@ -34,7 +27,6 @@ export class Card {
 
   _getElement() {
     const elementTemplate = document.querySelector(this._template).content;
-    
     const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
     elementCard.querySelector('.element__text').textContent = this._name;
     elementCard.querySelector('.element__photo').src = this._link; 
@@ -97,15 +89,4 @@ export class Card {
       });
     }
   }
-}
-
-
-export function createStandartElements(result) {
-  //console.log(result);
-  const card = new Card (result, '#element-template', data.id, (link, name) => {
-    const popup = new PopupWithImage('.popup_picture', link, name);
-    popup.setEventListeners();
-    popup.open();
-  });
-  return card.generate();
 }

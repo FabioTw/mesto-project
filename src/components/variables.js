@@ -30,7 +30,6 @@ const profileName = profileInfo.querySelector('.profile__name');
 const profileDescription = profileContainer.querySelector('.profile__description');
 const elements = document.querySelector('.elements');
 const element = elements.querySelector('.element');
-const elementDescription = element.querySelector('.element__description');
 const avatar = document.querySelector('.profile__avatar-container');
 const avatarImage = avatar.querySelector('.profile__avatar');
 

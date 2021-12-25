@@ -1,8 +1,3 @@
-
-import {addElement, openAddElementPopup, closeAddElementPopup, editProfileSubmitButton, closePopupProfile} from './modal.js';
-import {editButton, addButton, popupAddElement, popupPhoto, popupProfile, avatar, popupEditAvatar, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer} from './variables.js';
-
-
 function closeEscButton (event) {
   if (event.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
@@ -30,10 +25,4 @@ function renderLoading(isLoading, button) {
   }
 }
 
-
-
-//const apopup = new Popup('.popup_editAvatar'); 
-//apopup.setEventListeners();
-//apopup.open();
-//во всех функция вызовах переписать
 export {openPopup, closePopup, renderLoading};

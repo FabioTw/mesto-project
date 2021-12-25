@@ -1,12 +1,10 @@
 import './../pages/index.css';
-import * as card from './card.js'
+import Card from './card.js'
 import * as utils from './utils.js'
 import * as modal from './modal.js'
-import * as validate from './validate.js'
+import FormValidator from './formValidator.js'
 import * as variables from './variables.js'
-import * as api from './api.js'
 import Section from './section.js'
-import Popup from './popup.js'
 import PopupWithImage from './PopupWithImage.js'
 import PopupWithForm from './PopupWithForm.js'
 import UserInfo from './userInfo.js';
@@ -27,15 +25,15 @@ variables.myApi.getProfile()
 .then((result) => {
 
   const user = new UserInfo(result.name, result.about);
-  user.getUserInfo().then(res => {console.log(res)})
+  user.getUserInfo().then(res => {return res})
   setNetProfile(result)
-  validate.enableValidation(data); 
+  enableValidation(data); 
   //инициализируем карточки
   variables.myApi.getInitialCards(variables.elements) 
   .then((result) => {
 
     // создаем section
-    const section = new Section({items: result, renderer : (result) => {return card.createStandartElements(result)}}, '.elements');   
+    const section = new Section({items: result, renderer : (result) => {return createStandartElements(result)}}, '.elements');   
     section.renderer();
     // добавляем листенеры
     // редактирование профиля
@@ -80,7 +78,7 @@ variables.myApi.getProfile()
         utils.renderLoading(true, variables.submitAddElementButton);
         variables.myApi.addCard(variables.popupAddElementInputName.value, variables.popupAddElementInputDescription.value)
         .then(res => {
-          variables.elements.insertBefore(card.createStandartElements(res), variables.element);
+          variables.elements.insertBefore(createStandartElements(res), variables.element);
           //popupAddCard.close();
           //modal.resetPopupFields (popupAddElementInputName, popupAddElementInputDescription);
           if (event.target.querySelector(data.submitButtonSelector) !== null) {
@@ -176,3 +174,20 @@ function setNetProfile(res) {
   data.id = myProfileId
 }
 
+function createStandartElements(result) {
+  const card = new Card (result, '#element-template', data.id, (link, name) => {
+    const popup = new PopupWithImage('.popup_picture', link, name);
+    popup.setEventListeners();
+    popup.open();
+  });
+  return card.generate();
+}
+
+function enableValidation (data) {
+  const formList = Array.from(document.querySelectorAll(data.formSelector))
+  formList.forEach((formElement) => {
+    //setEventListeners(formElement)
+    const formValidator = new FormValidator(data, formElement);
+    formValidator.enableValidation();
+  })
+}
