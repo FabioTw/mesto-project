@@ -1,5 +1,3 @@
-import {element} from './variables.js'
-
 export default class Section {
   constructor({items, renderer}, selector) {
     this._items = items;
@@ -14,6 +12,6 @@ export default class Section {
     })
   }
   addItem(getElement) {
-    this._element.insertBefore(getElement, element);
+    this._element.prepend(getElement, this._element);
   }
 }

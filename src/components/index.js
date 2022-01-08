@@ -1,35 +1,35 @@
 import './../pages/index.css';
-import Card from './card.js'
-import * as utils from './utils.js'
-import * as modal from './modal.js'
-import FormValidator from './formValidator.js'
-import * as variables from './variables.js'
-import Section from './section.js'
-import PopupWithImage from './PopupWithImage.js'
-import PopupWithForm from './PopupWithForm.js'
+import Card from './card.js';
+import * as utils from './utils.js';
+import * as modal from './modal.js';
+import FormValidator from './formValidator.js';
+import * as variables from './variables.js';
+import Section from './section.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './userInfo.js';
+import Api from './api.js';
 
-export const data = {
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input-field',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
+// let myProfileId
 
-let myProfileId
+const config = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-4',
+  header : {
+    authorization: '7fbcd172-bf5b-475f-bf14-ccd6d6f0291e',
+    'Content-Type': 'application/json'
+  }
+}
 
+export const myApi = new Api(config);
 
-variables.myApi.getProfile()
+myApi.getProfile()
 .then((result) => {
-
-  const user = new UserInfo(result.name, result.about);
-  user.getUserInfo().then(res => {return res})
-  setNetProfile(result)
-  enableValidation(data); 
+  const user = new UserInfo('.profile__name', '.profile__description', '.profile__avatar', () => {return myApi.getProfile()});
+  user.setUserInfo(result);
+  variables.data.id = user.getProfileId();
+  enableValidation(variables.data); 
   //инициализируем карточки
-  variables.myApi.getInitialCards(variables.elements) 
+  myApi.getInitialCards() 
   .then((result) => {
 
     // создаем section
@@ -43,6 +43,7 @@ variables.myApi.getProfile()
       if (!(event.target.closest('.popup__button_disabled'))) {
         utils.renderLoading(true, variables.submitButton);
         user.setUserInfo(variables.popupProfileInputName.value, variables.popupProfileInputDescription.value)
+        //user.setUserInfo(._getInputValues())
         .then (res => {
           values.forEach(elem => {
             if (elem.element.name === 'profile-name') {
@@ -76,13 +77,13 @@ variables.myApi.getProfile()
       event.preventDefault(); 
       if (!(event.target.closest('.popup__button_disabled'))) {
         utils.renderLoading(true, variables.submitAddElementButton);
-        variables.myApi.addCard(variables.popupAddElementInputName.value, variables.popupAddElementInputDescription.value)
+        myApi.addCard(variables.popupAddElementInputName.value, variables.popupAddElementInputDescription.value)
         .then(res => {
           variables.elements.insertBefore(createStandartElements(res), variables.element);
           //popupAddCard.close();
           //modal.resetPopupFields (popupAddElementInputName, popupAddElementInputDescription);
-          if (event.target.querySelector(data.submitButtonSelector) !== null) {
-            modal.innactiveButton(event.target.querySelector(data.submitButtonSelector));
+          if (event.target.querySelector(variables.data.submitButtonSelector) !== null) {
+            modal.innactiveButton(event.target.querySelector(variables.data.submitButtonSelector));
           }
         })
         .finally (res => {
@@ -104,15 +105,15 @@ variables.myApi.getProfile()
       event.preventDefault(); 
       if (!(event.target.closest('.popup__button_disabled'))) {
         utils.renderLoading(true, variables.submitAvatarButton);
-        variables.myApi.updateProfileAvatar(variables.popupEditAvatarInputUrl.value)
+        myApi.updateProfileAvatar(variables.popupEditAvatarInputUrl.value)
         .then (res => {
           values.forEach(elem => {
             if (elem.element.name === 'profile-description') {
               variables.avatarImage.src = elem.value;
             }
           });
-          if (event.target.querySelector(data.submitButtonSelector) !== null) {
-            modal.innactiveButton(event.target.querySelector(data.submitButtonSelector));
+          if (event.target.querySelector(variables.data.submitButtonSelector) !== null) {
+            modal.innactiveButton(event.target.querySelector(variables.data.submitButtonSelector));
           }})
         .finally (res => {
           popupEditAvatar.close();
@@ -133,19 +134,19 @@ variables.myApi.getProfile()
       event.preventDefault();
       if (!(event.target.closest('.popup__button_disabled'))) {
         utils.renderLoading(true, variables.submitAddElementButton);
-        variables.myApi.addCard(variables.popupAddElementInputName.value, variables.popupAddElementInputDescription.value)
+        myApi.addCard(variables.popupAddElementInputName.value, variables.popupAddElementInputDescription.value)
         .then(res => {
 
-          const newCard = new card.Card (res , '#element-template', data.id, (link, name) => {
-            const popup = new PopupWithImage('.popup_picture', link, name);
+          const newCard = new card.Card (res , '#element-template', variables.data.id, (link, name) => {
+            const popup = new PopupWithImage('.popup_picture');
             popup.setEventListeners();
-            popup.open();
-          });
+            popup.open(link, name);
+          }, (elem) => {return myApi.deleteCard(elem)});
           section.addItem(newCard.generate());
           //popup.close();
           //modal.resetPopupFields (variables.popupAddElementInputName, variables.popupAddElementInputDescription);
-          if (event.target.querySelector(data.submitButtonSelector) !== null) {
-            modal.innactiveButton(event.target.querySelector(data.submitButtonSelector));
+          if (event.target.querySelector(variables.data.submitButtonSelector) !== null) {
+            modal.innactiveButton(event.target.querySelector(variables.data.submitButtonSelector));
           }
         })
         .finally (res => {
@@ -166,20 +167,12 @@ variables.myApi.getProfile()
   console.log(err)
 }); 
 
-function setNetProfile(res) {
-  variables.profileName.textContent = res.name;
-  variables.profileDescription.textContent = res.about;
-  variables.avatarImage.src = res.avatar;
-  myProfileId = String(res._id);
-  data.id = myProfileId
-}
-
 function createStandartElements(result) {
-  const card = new Card (result, '#element-template', data.id, (link, name) => {
-    const popup = new PopupWithImage('.popup_picture', link, name);
+  const card = new Card (result, '#element-template', variables.data.id, (link, name) => {
+    const popup = new PopupWithImage('.popup_picture');
     popup.setEventListeners();
-    popup.open();
-  });
+    popup.open(link, name);
+  }, (elem) => {return myApi.deleteCard(elem)});
   return card.generate();
 }
 

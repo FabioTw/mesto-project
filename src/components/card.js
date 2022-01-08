@@ -1,7 +1,5 @@
-import {myApi} from './variables.js'
-
 export default class Card {
-  constructor(value, template, myProfileId, handleCardClick){
+  constructor(value, template, myProfileId, handleCardClick, handleDeleteCard){
     this._name = value.name;
     this._link = value.link;
     this._template = template;
@@ -10,10 +8,16 @@ export default class Card {
     this._cardId = value._id;
     this._myProfileId = myProfileId;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteCard = handleDeleteCard;
+    this._elementTemplate = document.querySelector(this._template).content;
+    const elementCard = this._elementTemplate.querySelector('.element').cloneNode(true);
+    this._cardImage = elementCard.querySelector('.element__photo');
+    this._cardText = elementCard.querySelector('.element__text');
+    this._element = elementCard;
   }
 
   generate() {
-    this._element = this._getElement();
+    this._setElementValues();
     this._likeButton = this._element.querySelector('.element__button');
     this._deleteButton = this._element.querySelector('.element__delete');
     this._likesText = this._element.querySelector('.element__likes');
@@ -25,13 +29,10 @@ export default class Card {
     return this._element;
   }
 
-  _getElement() {
-    const elementTemplate = document.querySelector(this._template).content;
-    const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
-    elementCard.querySelector('.element__text').textContent = this._name;
-    elementCard.querySelector('.element__photo').src = this._link; 
-    elementCard.querySelector('.element__photo').alt = this._name + ' фото'; 
-    return elementCard;
+  _setElementValues() {
+    this._cardText.textContent = this._name;
+    this._cardImage.src = this._link; 
+    this._cardImage.alt = this._name + ' фото'; 
   }
 
   _setEventListeners() {
@@ -48,7 +49,7 @@ export default class Card {
   }
 
   _handleDelete() {
-    myApi.deleteCard(this._cardId)
+    this._handleDeleteCard(this._cardId)
     .then (res => {
       const listItem = this._deleteButton.closest('.element');
       listItem.remove();

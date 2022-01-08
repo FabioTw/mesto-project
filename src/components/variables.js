@@ -42,9 +42,16 @@ const submitAddElementButton = popupAddElementProfileEdit.querySelector('.popup_
 
 const submitAvatarButton = popupEditAvatarProfileEdit.querySelector('.popup__button');
 
-const myApi = new api.Api(api.config);
+const data = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input-field',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
 
 export {editButton, submitButton, submitAddElementButton, addButton, popupPhotoImg, popupPhotoText, 
   profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, 
   popupAddElementInputName, popupAddElementInputDescription , element, popupProfile, popupPhoto, popupProfileEdit,
-  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer, myApi};
+  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer, data};

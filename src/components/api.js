@@ -1,12 +1,5 @@
-export const config = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-4',
-  header : {
-    authorization: '7fbcd172-bf5b-475f-bf14-ccd6d6f0291e',
-    'Content-Type': 'application/json'
-  }
-}
 
-export class Api {
+export default class Api {
   constructor(config) {
     this.config = config;
   }
@@ -19,7 +12,7 @@ export class Api {
   }
 
   getProfile() {
-    return fetch(`${config.baseUrl}/users/me`, {
+    return fetch(`${this.config.baseUrl}/users/me`, {
       headers: this.config.header
     })
     .then(res => {
@@ -27,9 +20,9 @@ export class Api {
     });
   }
 
-  getInitialCards(elements) {
-    return fetch(`${config.baseUrl}/cards`, {
-      headers: config.header
+  getInitialCards() {
+    return fetch(`${this.config.baseUrl}/cards`, {
+      headers: this.config.header
     })
     .then(res => {
       return this._checkResult(res);
@@ -37,9 +30,9 @@ export class Api {
   }
 
   addCard(name, link){
-    return fetch(`${config.baseUrl}/cards`, {
+    return fetch(`${this.config.baseUrl}/cards`, {
       method: 'POST',
-      headers: config.header,
+      headers: this.config.header,
       body: JSON.stringify({
         name,
         link
@@ -51,9 +44,9 @@ export class Api {
   }
 
   deleteCard(card_id) {
-    return fetch(`${config.baseUrl}/cards/${card_id}`, {
+    return fetch(`${this.config.baseUrl}/cards/${card_id}`, {
       method: 'DELETE',
-      headers: config.header,
+      headers: this.config.header,
     })
     .then(res => {
       return this._checkResult(res);
@@ -61,9 +54,9 @@ export class Api {
   }
 
   updateProfile (name, about) {
-    return fetch(`${config.baseUrl}/users/me`, {
+    return fetch(`${this.config.baseUrl}/users/me`, {
     method: 'PATCH',
-    headers: config.header,
+    headers: this.config.header,
     body: JSON.stringify({
       name,
       about
@@ -75,9 +68,9 @@ export class Api {
   }
 
   updateProfileAvatar(link){
-    return fetch(`${config.baseUrl}/users/me/avatar`, {
+    return fetch(`${this.config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
-    headers: config.header,
+    headers: this.config.header,
     body: JSON.stringify({
       avatar: link
     })
@@ -88,9 +81,9 @@ export class Api {
   }
 
   deleteLike(card_id) {
-    return fetch(`${config.baseUrl}/cards/likes/${card_id}`, {
+    return fetch(`${this.config.baseUrl}/cards/likes/${card_id}`, {
       method: 'DELETE',
-      headers: config.header
+      headers: this.config.header
     })
     .then(res => {
       return this._checkResult(res)
@@ -98,9 +91,9 @@ export class Api {
   }
   
   addLike = (card_id) => {
-    return fetch(`${config.baseUrl}/cards/likes/${card_id}`, {
+    return fetch(`${this.config.baseUrl}/cards/likes/${card_id}`, {
       method: 'PUT',
-      headers: config.header
+      headers: this.config.header
     })
     .then(res => {
       return this._checkResult(res)

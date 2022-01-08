@@ -1,4 +1,4 @@
-import {data} from './index.js';
+import {data} from './variables.js';
 
 function resetPopupFields (field1, field2) {
   field1.value = '';
