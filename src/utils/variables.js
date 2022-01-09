@@ -1,5 +1,3 @@
-import * as api from './api.js';
-
 const popup = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('.popup_editElement');
 const popupProfileContainer = popupProfile.querySelector('.popup__container');

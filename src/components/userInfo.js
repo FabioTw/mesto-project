@@ -7,17 +7,23 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    return this._getUserInfo();
+    return {
+      name: this._name.textContent,
+      description: this._description.textContent,
+      avatar: this._avatar.src,
+      profileId: this._profileId
+    };
   }
 
-  setUserInfo({name, about, avatar, _id}) {
+  setUserInfo({name, about, avatar = null, _id = null}) {
     this._name.textContent = name;
     this._description.textContent = about;
-    this._avatar.src = avatar;
-    this._profileId = String(_id);
+    if (avatar) {
+      this._avatar.src = avatar;
+    }
+    if (_id) {
+      this._profileId = String(_id);
+    }
   }
 
-  getProfileId() {
-    return this._profileId;
-  }
 }
