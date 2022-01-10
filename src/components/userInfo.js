@@ -1,9 +1,8 @@
 export default class UserInfo {
-  constructor(name, description, avatar, getUserInfo) {
+  constructor(name, description, avatar) {
     this._name = document.querySelector(name);
     this._description = document.querySelector(description);
     this._avatar = document.querySelector(avatar);
-    this._getUserInfo = getUserInfo;
   }
 
   getUserInfo() {
@@ -15,9 +14,13 @@ export default class UserInfo {
     };
   }
 
-  setUserInfo({name, about, avatar = null, _id = null}) {
-    this._name.textContent = name;
-    this._description.textContent = about;
+  setUserInfo({name = null, about = null, avatar = null, _id = null}) {
+    if (name) {
+      this._name.textContent = name;
+    }
+    if (about) {
+      this._description.textContent = about;
+    }
     if (avatar) {
       this._avatar.src = avatar;
     }
@@ -25,5 +28,4 @@ export default class UserInfo {
       this._profileId = String(_id);
     }
   }
-
 }

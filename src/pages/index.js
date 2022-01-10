@@ -18,16 +18,17 @@ const config = {
     'Content-Type': 'application/json'
   }
 }
-
+const popup = new PopupWithImage('.popup_picture');
+popup.setEventListeners();
 const myApi = new Api(config);
 
 myApi.getProfile()
 .then((result) => {
-  const user = new UserInfo('.profile__name', '.profile__description', '.profile__avatar', () => {return myApi.getProfile()});
+  const user = new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
   user.setUserInfo(result);
   variables.data.id = user.getUserInfo().profileId;
-  //инициализируем карточки
   myApi.getInitialCards() 
+  //инициализируем карточки
   .then((result) => {
       // включаем валидацию
     const formList = Array.from(document.querySelectorAll(variables.data.formSelector))  
@@ -59,9 +60,9 @@ myApi.getProfile()
       event.preventDefault(); 
       if (!(event.target.closest('.popup__button_disabled'))) {
         utils.renderLoading(true, variables.submitButton);
-        user.setUserInfo({name: values['profile-name'], about: values['profile-description']});
         myApi.updateProfile(values['profile-name'], values['profile-description'])
         .then (res => {
+          user.setUserInfo({name: values['profile-name'], about: values['profile-description']});
           popupEditProfile.close();
         })
         .finally (res => {
@@ -117,8 +118,8 @@ myApi.getProfile()
         utils.renderLoading(true, variables.submitAvatarButton);
         myApi.updateProfileAvatar(variables.popupEditAvatarInputUrl.value)
         .then (res => {
-            variables.avatarImage.src = values['profile-description'];
-          }) 
+          user.setUserInfo({avatar: values['profile-description']});
+        }) 
         .then(res => {
           popupEditAvatar.close()
           if (event.target.querySelector(variables.data.submitButtonSelector) !== null) {
@@ -150,19 +151,29 @@ myApi.getProfile()
 }); 
 
 function createStandartElements(result) {
-  const popup = new PopupWithImage('.popup_picture');
-  popup.setEventListeners();
   const card = new Card (result, '#element-template', variables.data.id, (link, name) => {
     popup.open(link, name);
-  }, (elem) => {return myApi.deleteCard(elem)});
+  }, (elem) => {return myApi.deleteCard(elem)}, 
+  (evt, id, likesText) => {
+    if (evt.target.classList.contains('element__button_activated')){
+      myApi.deleteLike(id)
+      .then (res => {
+        evt.target.classList.remove('element__button_activated');
+        likesText.textContent = res.likes.length;
+      })
+      .catch ((err) => {
+        console.log(err)
+      });
+    } else {
+      myApi.addLike(id)
+      .then (res => {
+        evt.target.classList.add('element__button_activated');
+        likesText.textContent = res.likes.length;
+      })
+      .catch ((err) => {
+        console.log(err)
+      });
+    }
+  });
   return card.generate();
 }
-
-// function enableValidation (data) {
-//   const formList = Array.from(document.querySelectorAll(data.formSelector))
-//   formList.forEach((formElement) => {
-//     //setEventListeners(formElement)
-//     const formValidator = new FormValidator(data, formElement);
-//     formValidator.enableValidation();
-//   })
-// }

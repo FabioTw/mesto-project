@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(value, template, myProfileId, handleCardClick, handleDeleteCard){
+  constructor(value, template, myProfileId, handleCardClick, handleDeleteCard, handlerCardLike){
     this._name = value.name;
     this._link = value.link;
     this._template = template;
@@ -14,6 +14,7 @@ export default class Card {
     this._cardImage = elementCard.querySelector('.element__photo');
     this._cardText = elementCard.querySelector('.element__text');
     this._element = elementCard;
+    this._handleCardLike = handlerCardLike;
   }
 
   generate() {
@@ -37,7 +38,7 @@ export default class Card {
 
   _setEventListeners() {
     this._element.querySelector('.element__photo').addEventListener('click', () => this._handleCardClick(this._link, this._name));
-    this._likeButton.addEventListener('click', (evt) => this._handleLike(evt));
+    this._likeButton.addEventListener('click', (evt) => this._handleCardLike(evt, this._cardId, this._likesText));
     this._deleteButton.addEventListener('click', () =>  this._handleDelete());
   }
 
@@ -67,27 +68,5 @@ export default class Card {
         this._likeButton.classList.remove('element__button_activated');
       }
     });
-  }
-
-  _handleLike(evt) {
-    if (evt.target.classList.contains('element__button_activated')){
-      myApi.deleteLike(this._cardId)
-      .then (res => {
-        evt.target.classList.remove('element__button_activated');
-        this._likesText.textContent = res.likes.length;
-      })
-      .catch ((err) => {
-        console.log(err)
-      });
-    } else {
-      myApi.addLike(this._cardId)
-      .then (res => {
-        evt.target.classList.add('element__button_activated');
-        this._likesText.textContent = res.likes.length;
-      })
-      .catch ((err) => {
-        console.log(err)
-      });
-    }
   }
 }
