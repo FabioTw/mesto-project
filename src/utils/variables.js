@@ -28,7 +28,6 @@ const profileName = profileInfo.querySelector('.profile__name');
 const profileDescription = profileContainer.querySelector('.profile__description');
 const elements = document.querySelector('.elements');
 const element = elements.querySelector('.element');
-const elementDescription = element.querySelector('.element__description');
 const avatar = document.querySelector('.profile__avatar-container');
 const avatarImage = avatar.querySelector('.profile__avatar');
 
@@ -41,7 +40,16 @@ const submitAddElementButton = popupAddElementProfileEdit.querySelector('.popup_
 
 const submitAvatarButton = popupEditAvatarProfileEdit.querySelector('.popup__button');
 
+const data = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input-field',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
 export {editButton, submitButton, submitAddElementButton, addButton, popupPhotoImg, popupPhotoText, 
   profileDescription, profileName, popupProfileInputName, popupProfileInputDescription, elements, popupAddElement, 
   popupAddElementInputName, popupAddElementInputDescription , element, popupProfile, popupPhoto, popupProfileEdit,
-  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer};
+  avatar, popupEditAvatar, submitAvatarButton, avatarImage, popupEditAvatarInputUrl, popup, popupProfileContainer, popupAddElementContainer, popupEditAvatarContainer, data};
