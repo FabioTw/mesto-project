@@ -158,8 +158,7 @@ function createStandartElements(result) {
     if (evt.target.classList.contains('element__button_activated')){
       myApi.deleteLike(id)
       .then (res => {
-        evt.target.classList.remove('element__button_activated');
-        likesText.textContent = res.likes.length;
+        card.updateLikes(res, evt)
       })
       .catch ((err) => {
         console.log(err)
@@ -167,8 +166,7 @@ function createStandartElements(result) {
     } else {
       myApi.addLike(id)
       .then (res => {
-        evt.target.classList.add('element__button_activated');
-        likesText.textContent = res.likes.length;
+        card.updateLikes(res, evt)
       })
       .catch ((err) => {
         console.log(err)

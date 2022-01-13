@@ -69,4 +69,9 @@ export default class Card {
       }
     });
   }
+
+  updateLikes(res, evt) {
+    evt.target.classList.toggle('element__button_activated');
+    this._likesText.textContent = res.likes.length;
+  }
 }
