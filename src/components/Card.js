@@ -74,4 +74,8 @@ export default class Card {
     evt.target.classList.toggle('element__button_activated');
     this._likesText.textContent = res.likes.length;
   }
+
+  isLiked(evt) {
+    return evt.target.classList.contains('element__button_activated');
+  }
 }

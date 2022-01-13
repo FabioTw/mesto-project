@@ -154,8 +154,8 @@ function createStandartElements(result) {
   const card = new Card (result, '#element-template', variables.data.id, (link, name) => {
     popup.open(link, name);
   }, (elem) => {return myApi.deleteCard(elem)}, 
-  (evt, id, likesText) => {
-    if (evt.target.classList.contains('element__button_activated')){
+  (evt, id) => {
+    if (card.isLiked(evt)){
       myApi.deleteLike(id)
       .then (res => {
         card.updateLikes(res, evt)
